@@ -3,6 +3,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Game",
+            "request": "launch",
+            "mainClass": "Game",
+            "projectName": "program-design-II_486e74c6"
+        },
+        {
+            "type": "java",
             "name": "Launch StoryGame",
             "request": "launch",
             "mainClass": "StoryGame",

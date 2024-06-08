@@ -6,6 +6,9 @@
 
 # BlueJ files
 *.ctxt
+/bin/
+/target/
+/build/
 
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
@@ -28,3 +31,24 @@ replay_pid*
 *.ipr
 *.iws
 .idea/
+
+
+# VSCode
+.vscode/
+
+# os file
+.DS_Store
+Thumbs.db
+
+# others
+*.tmp
+*.swp
+*.swo
+
+# maven and gradle
+.mvn/
+.gradle/
+**/build/
+
+# test output
+/test-output/

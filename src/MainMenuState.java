@@ -20,6 +20,7 @@ public class MainMenuState extends GameState {
             @Override
             public void actionPerformed(ActionEvent e) {
                 game.changeState(new PlayState(game));
+                startButton.setText("Restart Game");
             }
         });
 

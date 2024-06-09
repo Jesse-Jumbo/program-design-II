@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class StoryGame extends JFrame implements MouseListener {
+public class StoryPanel extends JPanel implements MouseListener {
     private JLabel imageLabel;
     private ArrayList<ImageIcon> preludeImages;
     private ArrayList<ImageIcon> chapter1Images;
@@ -14,27 +14,24 @@ public class StoryGame extends JFrame implements MouseListener {
     private int currentChapter;
     private Map<Integer, ImageIcon> scaledImageCache;
 
-    public StoryGame() {
-        // 初始化 JFrame
-        setTitle("Program Design 2");
-        setSize(960, 540); // 設置初始窗口大小為較小尺寸
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLocationRelativeTo(null);
-        setResizable(true); // 允許調整窗口大小
+    public StoryPanel() {
+        // 初始化 JPanel
+        setLayout(new BorderLayout());
+        setPreferredSize(new Dimension(960, 540)); // 設置初始窗口大小為較小尺寸
 
         // 初始化圖片列表
         preludeImages = new ArrayList<>();
         chapter1Images = new ArrayList<>();
         chapter2Images = new ArrayList<>();
-        loadImages(preludeImages, "PD2前情提要", 24, "png");
-        loadImages(chapter1Images, "PD2第一章", 196, "png");
-        loadImages(chapter2Images, "PD2第二章", 224, "jpg");
+        loadImages(preludeImages, "PD2-previou", 24, "png");
+        loadImages(chapter1Images, "PD2-s1", 196, "png");
+        loadImages(chapter2Images, "PD2-s2", 224, "jpg");
 
         // 初始化 JLabel 並顯示第一張圖片
         imageLabel = new JLabel();
         imageLabel.setHorizontalAlignment(JLabel.CENTER);
         imageLabel.setVerticalAlignment(JLabel.CENTER);
-        add(imageLabel);
+        add(imageLabel, BorderLayout.CENTER);
 
         // 初始化圖片緩存
         scaledImageCache = new HashMap<>();
@@ -44,7 +41,9 @@ public class StoryGame extends JFrame implements MouseListener {
 
         currentIndex = 0;
         currentChapter = 0; // 初始狀態為前情提要
-        updateImage();
+
+        // 在面板顯示後調用 updateImage
+        SwingUtilities.invokeLater(this::updateImage);
     }
 
     private void loadImages(ArrayList<ImageIcon> images, String folderName, int count, String extension) {
@@ -62,10 +61,14 @@ public class StoryGame extends JFrame implements MouseListener {
             // 如果圖片不在緩存中，進行縮放並添加到緩存中
             ImageIcon originalIcon = currentImages.get(currentIndex);
             Image originalImage = originalIcon.getImage();
-            Image scaledImage = originalImage.getScaledInstance(getWidth(), getHeight(), Image.SCALE_SMOOTH);
-            ImageIcon scaledIcon = new ImageIcon(scaledImage);
-            scaledImageCache.put(currentIndex, scaledIcon);
-            imageLabel.setIcon(scaledIcon);
+            int width = getWidth();
+            int height = getHeight();
+            if (width > 0 && height > 0) {
+                Image scaledImage = originalImage.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+                ImageIcon scaledIcon = new ImageIcon(scaledImage);
+                scaledImageCache.put(currentIndex, scaledIcon);
+                imageLabel.setIcon(scaledIcon);
+            }
         }
     }
 
@@ -114,12 +117,4 @@ public class StoryGame extends JFrame implements MouseListener {
     public void mouseEntered(MouseEvent e) {}
     @Override
     public void mouseExited(MouseEvent e) {}
-
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            StoryGame game = new StoryGame();
-            game.setVisible(true);
-        });
-    }
 }
-

@@ -9,6 +9,24 @@ public class PlayState extends GameState {
     public PlayState(Game game) {
         super(game);
         game.setLayout(new BorderLayout()); // 使用 BorderLayout 佈局管理器
+
+        JButton northButton = new JButton("North");
+        game.add(northButton, BorderLayout.NORTH);
+
+        JButton southButton = new JButton("South");
+        game.add(southButton, BorderLayout.SOUTH);
+
+        JButton eastButton = new JButton("East");
+        game.add(eastButton, BorderLayout.EAST);
+
+        JButton westButton = new JButton("West");
+        game.add(westButton, BorderLayout.WEST);
+
+        JButton centerButton = new JButton("Center");
+        game.add(centerButton, BorderLayout.CENTER);
+
+        // 顯示框架
+        game.setVisible(true);
     }
 
     @Override

@@ -20,10 +20,11 @@ public class LevelPanel extends GameState {
         panel.setLayout(new BorderLayout());
 
         try {
-            questions = QuizLoader.loadQuestions("../../../asset/question/question_" + chapter + ".json");
+            questions = QuizLoader.loadQuestions("assets/question/question_" + chapter + ".json"); // 修改為相對路徑
         } catch (IOException e) {
             e.printStackTrace();
-            return;
+            JOptionPane.showMessageDialog(panel, "Question file not found! Using default questions.");
+            questions = QuizLoader.getDefaultQuestions(); // 使用預設問題集
         }
         Collections.shuffle(questions);
 
@@ -47,8 +48,8 @@ public class LevelPanel extends GameState {
         if (currentQuestionIndex < questions.size()) {
             Question question = questions.get(currentQuestionIndex);
             questionLabel.setText("<html>" + question.question.replace("\n", "<br>") + "</html>");
-            for (int i = 0; i < question.options.size(); i++) {
-                optionButtons[i].setText(question.options.get(i));
+            for (int i = 0; i < 4; i++) {
+                optionButtons[i].setText(Character.toString((char) ('A' + i)));
             }
         } else {
             if (correctCount >= 3) {

@@ -1,13 +1,21 @@
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 
 class Question {
     public String question;
-    public List<String> options;
     public String answer;
     public String explanation;
+
+    public Question() {}
+
+    public Question(String question, String answer, String explanation) {
+        this.question = question;
+        this.answer = answer;
+        this.explanation = explanation;
+    }
 }
 
 public class QuizLoader {
@@ -16,7 +24,20 @@ public class QuizLoader {
     public static List<Question> loadQuestions(String filePath) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
         questionPath = filePath;
-        return mapper.readValue(new File(filePath), mapper.getTypeFactory().constructCollectionType(List.class, Question.class));
+        File file = new File(filePath);
+        if (!file.exists()) {
+            throw new IOException("File not found: " + filePath);
+        }
+        return mapper.readValue(file, mapper.getTypeFactory().constructCollectionType(List.class, Question.class));
+    }
+
+    public static List<Question> getDefaultQuestions() {
+        // 返回預設問題集
+        Question q1 = new Question("Default Question 1", "A", "Explanation 1");
+        Question q2 = new Question("Default Question 2", "B", "Explanation 2");
+        Question q3 = new Question("Default Question 3", "C", "Explanation 3");
+        Question q4 = new Question("Default Question 4", "D", "Explanation 4");
+        return Arrays.asList(q1, q2, q3, q4);
     }
 
     public static void main(String[] args) {
@@ -24,7 +45,6 @@ public class QuizLoader {
             List<Question> questions = loadQuestions(questionPath);
             for (Question q : questions) {
                 System.out.println("Question: " + q.question);
-                System.out.println("Options: " + q.options);
                 System.out.println("Answer: " + q.answer);
                 System.out.println("Explanation: " + q.explanation);
                 System.out.println();

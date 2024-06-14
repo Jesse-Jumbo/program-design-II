@@ -6,25 +6,24 @@ import java.awt.event.ActionListener;
 public class SettingsMenuState extends GameState {
     private JButton backButton;
 
-    public SettingsMenuState(Game game) {
-        super(game);
-        game.setLayout(new FlowLayout());
+    public SettingsMenuState(GameStateManager gsm, Game game) {
+        super(gsm);
+        panel.setLayout(new BorderLayout());
 
         backButton = new JButton("Back to Main Menu");
-
         backButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                game.changeState(new MainMenuState(game));
+                gsm.setState(GameStateManager.MENU);
             }
         });
 
-        game.add(backButton);
+        panel.add(backButton, BorderLayout.SOUTH);
     }
 
     @Override
-    public void handleInput() {
-        // 使用 Swing 事件處理
+    public void init() {
+        // 初始化設置菜單狀態
     }
 
     @Override
@@ -33,10 +32,16 @@ public class SettingsMenuState extends GameState {
     }
 
     @Override
-    public void render(Graphics g) {
-        g.setColor(Color.WHITE);
-        g.fillRect(0, 0, 1000, 600);
-        g.setColor(Color.BLACK);
-        g.drawString("Settings Menu", 450, 300);
+    public void render() {
+        // 繪製設置菜單
+    }
+
+    @Override
+    public void handleInput() {
+    }
+
+    @Override
+    public void cleanup() {
+        // 清理資源
     }
 }

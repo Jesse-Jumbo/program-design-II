@@ -316,6 +316,11 @@ public class LevelPanel extends GameState {
             char correctAnswer = question.answer.charAt(0);
             char selectedAnswer = (char) ('A' + optionIndex);
 
+            String explanation = question.explanation; // 獲取解釋
+
+            String result = selectedAnswer == correctAnswer ? "Correct" : "Incorrect";
+            int messageType = selectedAnswer == correctAnswer ? JOptionPane.INFORMATION_MESSAGE : JOptionPane.ERROR_MESSAGE;
+
             if (selectedAnswer == correctAnswer) {
                 correctCount++;
                 questions.remove(currentQuestionIndex);
@@ -324,6 +329,14 @@ public class LevelPanel extends GameState {
                 wrongCount++;
                 playerHearts[getLoseCondition() - wrongCount].setIcon(loadImageIcon("assets/image/grey_heart.png"));
             }
+
+            // 彈出解釋對話框
+            JTextArea explanationTextArea = new JTextArea(explanation);
+            explanationTextArea.setLineWrap(true);
+            explanationTextArea.setWrapStyleWord(true);
+            explanationTextArea.setPreferredSize(new Dimension(400, 300));
+            explanationTextArea.setEditable(false);
+            JOptionPane.showMessageDialog(panel, new JScrollPane(explanationTextArea), result, messageType);
 
             if (correctCount >= getWinCondition() || wrongCount >= getLoseCondition()) {
                 checkGameOver();

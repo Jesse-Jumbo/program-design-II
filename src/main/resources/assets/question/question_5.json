@@ -1,0 +1,102 @@
+[
+  {
+    "question": "Q: 下列哪一個程式碼片段會導致編譯錯誤？\nA int[] array = new int[5]; System.out.println(array[5]);\nB int x = 5 / 0;\nC String str = null; System.out.println(str.length());\nD 以上皆是",
+    "answer": "D",
+    "explanation": "選項 A 會在運行時拋出 ArrayIndexOutOfBoundsException。選項 B 會在運行時拋出 ArithmeticException（除以零）。選項 C 會在運行時拋出 NullPointerException。因此，正確答案是 D，以上皆是。"
+  },
+  {
+    "question": "Q: 考慮以下類別繼承結構，以下哪個選項可正確編譯並執行？\nclass Animal {\n    public void makeSound() {\n        System.out.println(\"Animal sound\");\n    }\n}\nclass Dog extends Animal {\n    public void makeSound() {\n        System.out.println(\"Bark\");\n    }\n}\nclass Cat extends Animal {\n    public void makeSound() {\n        System.out.println(\"Meow\");\n    }\n}\nA Animal a = new Dog(); a.makeSound();\nB Animal a = new Cat(); a.makeSound();\nC Animal a = new Animal(); a.makeSound();\nD 以上皆是",
+    "answer": "D",
+    "explanation": "所有選項都會正確編譯並執行，並且它們會根據多態性原則調用正確的 makeSound() 方法。選項 A 會打印 \"Bark\"，選項 B 會打印 \"Meow\"，選項 C 會打印 \"Animal sound\"。"
+  },
+  {
+    "question": "Q: 以下程式碼的輸出是什麼？\npublic class Test {\n    public static void main(String[] args) {\n        int[] array = {1, 2, 3, 4, 5};\n        System.out.println(sum(array, 0));\n    }\n\n    public static int sum(int[] array, int index) {\n        if (index == array.length) {\n            return 0;\n        }\n        return array[index] + sum(array, index + 1);\n    }\n}\nA 15\nB 10\nC 0\nD 編譯錯誤",
+    "answer": "A",
+    "explanation": "這段程式碼使用遞迴來計算陣列元素的和。從 index 為 0 開始，每次將當前元素加上遞迴調用的結果。最終，所有元素的和為 1 + 2 + 3 + 4 + 5 = 15。"
+  },
+  {
+    "question": "Q: 以下程式碼會輸出什麼？\npublic class Test {\n    public static void main(String[] args) {\n        try {\n            int result = divide(10, 0);\n            System.out.println(result);\n        } catch (ArithmeticException e) {\n            System.out.println(\"ArithmeticException\");\n        } finally {\n            System.out.println(\"Finally block\");\n        }\n    }\n    public static int divide(int a, int b) {\n        return a / b;\n    }\n}\n(A) 10\n(B) ArithmeticException\\nFinally block\n(C) Finally block\n(D) ArithmeticException",
+    "answer": "B",
+    "explanation": "divide(10, 0) 會拋出 ArithmeticException，因此 catch 塊會捕捉到這個異常並打印 \"ArithmeticException\"。不管有沒有拋出異常，finally 塊中的程式碼都會被執行，所以會打印 \"Finally block\"。最終輸出為 \"ArithmeticException\\nFinally block\"。"
+  },
+  {
+    "question": "Q: 考慮以下 Java 程式，哪一個選項是正確的？\npublic class Test {\n    public static void main(String[] args) {\n        String str1 = new String(\"hello\");\n        String str2 = new String(\"hello\");\n\n        if (str1 == str2) {\n            System.out.println(\"str1 == str2\");\n        } else {\n            System.out.println(\"str1 != str2\");\n        }\n\n        if (str1.equals(str2)) {\n            System.out.println(\"str1 equals str2\");\n        } else {\n            System.out.println(\"str1 not equals str2\");\n        }\n    }\n}\n(A) str1 == str2\n(B) str1 equals str2\n(C) str1 != str2 並輸出 str1 equals str2\n(D) str1 not equals str2",
+    "answer": "C",
+    "explanation": "str1 和 str2 是用 new 關鍵字創建的兩個不同的 String 物件，因此它們在記憶體中的地址不同，str1 == str2 為 false。但是，它們的內容相同，因此 str1.equals(str2) 為 true。最終輸出為 \"str1 != str2\\nstr1 equals str2\"。"
+  },
+  {
+    "question": "Q: 在物件導向程式設計中，下列哪一個特性允許物件對外隱藏其內部實現細節？\nA 封裝 (Encapsulation)\nB 多型 (Polymorphism)\nC 繼承 (Inheritance)\nD 抽象 (Abstraction)",
+    "answer": "A",
+    "explanation": "封裝 (Encapsulation) 是物件導向程式設計的一個重要特性，允許物件對外隱藏其內部實現細節，只暴露必要的介面。"
+  },
+  {
+    "question": "Q: 下列哪一個不是物件導向程式設計的目標？\nA Robustness\nB Adaptability\nC Complexity\nD Reusability",
+    "answer": "C",
+    "explanation": "物件導向程式設計的目標包括強健性（Robustness）、可適應性（Adaptability）和可重用性（Reusability）。複雜性（Complexity）不是其目標，反而是要降低複雜性。"
+  },
+  {
+    "question": "Q: 以下哪個選項說明了繼承（Inheritance）的主要好處？\nA 減少了程式的複雜性\nB 提高了程式的執行速度\nC 允許子類別共享和重用父類別的屬性和方法\nD 防止程式碼的重複",
+    "answer": "C",
+    "explanation": "繼承允許子類別共享和重用父類別的屬性和方法，這是繼承的主要好處之一，從而實現了程式碼的重用和擴展性。"
+  },
+  {
+    "question": "Q: 下列關於抽象類別和介面的敘述，哪一個是正確的？\nA 抽象類別不能有具體方法\nB 抽象類別可以有建構子\nC 介面不能有靜態方法\nD 介面可以有私有屬性",
+    "answer": "B",
+    "explanation": "抽象類別可以有具體方法和建構子，而介面不能有實例建構子，但在 Java 8 之後可以有靜態方法和預設方法（default methods）。介面不能有私有屬性，所有屬性都是 public static final 的。"
+  },
+  {
+    "question": "Q: 以下程式碼的輸出是什麼？\npublic class Test {\n    public static void main(String[] args) {\n        String a = \"hello\";\n        String b = \"hello\";\n        String c = new String(\"hello\");\n        String d = new String(\"hello\");\n\n        System.out.println(a == b);\n        System.out.println(a == c);\n        System.out.println(c == d);\n        System.out.println(a.equals(c));\n    }\n}\n(A) true\\ntrue\\nfalse\\ntrue\n(B) false\\nfalse\\ntrue\\nfalse\n(C) false\\ntrue\\ntrue\\nfalse\n(D) true\\nfalse\\nfalse\\ntrue",
+    "answer": "D",
+    "explanation": "a 和 b 指向相同的字符串常量池中的對象，所以 a == b 為 true。a 和 c 指向不同的對象（因為 c 使用 new 關鍵字創建），所以 a == c 為 false。c 和 d 指向不同的對象（因為 d 使用 new 關鍵字創建），所以 c == d 為 false。但是 a.equals(c) 比較的是字符串內容，所以為 true。"
+  },
+  {
+    "question": "Q: 考慮以下程式碼，請問輸出結果是什麼？\nclass Base {\n    public void print() {\n        System.out.println(\"Base\");\n    }\n}\nclass Derived extends Base {\n    public void print() {\n        System.out.println(\"Derived\");\n    }\n}\npublic class Test {\n    public static void main(String[] args) {\n        Base b = new Derived();\n        b.print();\n    }\n}\nA Base\nB Derived\nC BaseDerived\nD 編譯錯誤",
+    "answer": "B",
+    "explanation": "這段程式碼展示了多型（Polymorphism）的概念。雖然變數 b 的型別是 Base，但它實際引用的是 Derived 的實例，因此調用的是 Derived 類別的 print 方法，輸出 \"Derived\"。"
+  },
+  {
+    "question": "Q: 下列有關 hashCode() 和 equals() 方法的描述，哪一個是正確的？\nA 如果兩個對象是相等的 (equals 方法返回 true)，它們的 hashCode 必須相同\nB 如果兩個對象的 hashCode 相同，它們必定是相等的\nC hashCode() 和 equals() 方法是無關聯的\nD 覆寫 equals() 方法不需要覆寫 hashCode() 方法",
+    "answer": "A",
+    "explanation": "根據 Java 的規範，如果兩個對象是相等的（即 equals 方法返回 true），那麼它們的 hashCode 值必須相同。然而，如果兩個對象的 hashCode 相同，它們不一定是相等的。"
+  },
+  {
+    "question": "Q: 考慮以下程式碼片段，請問輸出結果是什麼？\npublic class Test {\n    public static void main(String[] args) {\n        int[] numbers = {1, 2, 3, 4, 5};\n        int result = 0;        \n        for (int i = 0; i < numbers.length; i++) {\n            if (i % 2 == 0) {\n                result += numbers[i];\n            } else {\n                result -= numbers[i];\n            }\n        }        \n        System.out.println(result);\n    }\n}\nA 3\nB 5\nC 7\nD 9",
+    "answer": "A",
+    "explanation": "這段程式碼遍歷陣列 numbers，在偶數索引位置的數字相加，在奇數索引位置的數字相減。計算過程如下：result = 0 + 1 (偶數索引) - 2 (奇數索引) + 3 (偶數索引) - 4 (奇數索引) + 5 (偶數索引) = 3"
+  },
+  {
+    "question": "Q: 考慮以下類別和介面，請問程式碼會產生什麼結果？\ninterface A {\n    void method1();\n}\nclass B implements A {\n    public void method1() {\n        System.out.println(\"B\");\n    }\n}\nclass C extends B {\n    public void method1() {\n        System.out.println(\"C\");\n    }\n}\npublic class Test {\n    public static void main(String[] args) {\n        A a = new C();\n        a.method1();\n    }\n}\nA A\nB B\nC C\nD 編譯錯誤",
+    "answer": "C",
+    "explanation": "這段程式碼展示了介面的實作和類別的繼承。變數 a 的型別是介面 A，但它實際上引用的是 C 類別的實例。因此，調用的是 C 類別的 method1 方法，輸出 \"C\"。"
+  },
+  {
+    "question": "Q: 考慮以下Java程式碼，請問輸出結果是什麼？\nimport java.util.*;\npublic class Test {\n    public static void main(String[] args) {\n        List<Integer> list = new ArrayList<>();\n        list.add(1);\n        list.add(2);\n        list.add(3);\n        list.add(4);\n        list.add(5);\n        Iterator<Integer> iterator = list.iterator();\n        while (iterator.hasNext()) {\n            Integer value = iterator.next();\n            if (value % 2 == 0) {\n                iterator.remove();\n            }\n        }\n        System.out.println(list);\n    }\n}\n(A) [1, 2, 3, 5]\n(B) [2, 4]\n(C) [1, 2, 3, 4, 5]\n(D) [1, 3, 5]",
+    "answer": "D",
+    "explanation": "這段程式碼使用 Iterator 遍歷 list，並移除所有偶數（2 和 4）。最終輸出的是移除偶數後的 list，即 [1, 3, 5]。"
+  },
+  {
+    "question": "Q: 在選擇資料結構時，哪一個因素不應該被優先考慮？\nA 資料結構的時間複雜度\nB 資料結構的空間複雜度\nC 資料結構的實現難易度\nD 資料結構的名稱",
+    "answer": "D",
+    "explanation": "在選擇資料結構時，應優先考慮其時間複雜度、空間複雜度和實現的難易度，而資料結構的名稱並不影響其性能或使用。"
+  },
+  {
+    "question": "Q: 考慮以下程式碼，請問輸出結果是什麼？\nimport java.util.*;\npublic class Test {\n    public static void main(String[] args) {\n        List<Integer> arrayList = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5));\n        List<Integer> linkedList = new LinkedList<>(arrayList);\n        \n        long startTime = System.nanoTime();\n        arrayList.remove(2);\n        long endTime = System.nanoTime();\n        System.out.println(\"ArrayList 刪除時間: \" + (endTime - startTime) + \" ns\");\n\n        startTime = System.nanoTime();\n        linkedList.remove(2);\n        endTime = System.nanoTime();\n        System.out.println(\"LinkedList 刪除時間: \" + (endTime - startTime) + \" ns\");\n    }\n}\nA ArrayList 刪除時間顯著快於 LinkedList\nB LinkedList 刪除時間顯著快於 ArrayList\nC ArrayList 和 LinkedList 刪除時間相似\nD 以上皆非",
+    "answer": "B",
+    "explanation": "在刪除操作中，LinkedList 通常比 ArrayList 更快，因為 LinkedList 只需調整鏈接，而 ArrayList 需要移動元素來填補空位。"
+  },
+  {
+    "question": "Q: 下列關於雙向連結串列（Double Linked List）的敘述，哪一個是正確的？\nA 雙向連結串列只能從頭部進行遍歷\nB 雙向連結串列在插入和刪除操作中比單向連結串列效率低\nC 雙向連結串列的每個節點都包含指向前一個和下一個節點的指標\nD 雙向連結串列不適合實現堆疊（Stack）結構",
+    "answer": "C",
+    "explanation": "雙向連結串列的每個節點都包含指向前一個和下一個節點的指標，這使得它能夠雙向遍歷並且在插入和刪除操作中效率更高。"
+  },
+  {
+    "question": "Q: 下列有關棧（Stack）和佇列（Queue）的描述，哪一個是正確的？\nA 棧是先進先出（FIFO）的資料結構，而佇列是後進先出（LIFO）的資料結構\nB 棧和佇列都只能在一端進行插入和刪除操作\nC 棧是後進先出（LIFO）的資料結構，而佇列是先進先出（FIFO）的資料結構\nD 棧和佇列都只能在兩端進行插入和刪除操作",
+    "answer": "C",
+    "explanation": "棧（Stack）是後進先出（LIFO）的資料結構，而佇列（Queue）是先進先出（FIFO）的資料結構。棧的插入和刪除操作在同一端進行，而佇列的插入操作在一端，刪除操作在另一端。"
+  },
+  {
+    "question": "Q: 下列有關資料結構和演算法的描述，哪一個是正確的？\nA 不同的資料結構對應的演算法可能會有所不同\nB 資料結構的選擇不會影響演算法的性能\nC 在所有情況下，使用資料結構如 LinkedList 都比 ArrayList 更高效\nD 使用相同的資料結構，不同的演算法性能總是相同的",
+    "answer": "A",
+    "explanation": "不同的資料結構對應的演算法可能會有所不同，這是因為資料結構的特性會影響演算法的實現和性能。例如，對於陣列，我們常常使用的排序演算法可能會是 quicksort 或 merge sort，而對於連結串列，我們可能會選擇使用 insertion sort 或 merge sort。"
+  }
+]

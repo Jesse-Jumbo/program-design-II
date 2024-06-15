@@ -19,8 +19,11 @@ class Question {
 }
 
 public class QuizLoader {
+
+    private static String questionPath;
     public static List<Question> loadQuestions(String resourcePath) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
+        questionPath = resourcePath;
         try (InputStream inputStream = QuizLoader.class.getClassLoader().getResourceAsStream(resourcePath)) {
             if (inputStream == null) {
                 throw new IOException("Resource not found: " + resourcePath);
@@ -40,7 +43,6 @@ public class QuizLoader {
 
     public static void main(String[] args) {
         try {
-            String questionPath = "assets/question/question_1.json";
             List<Question> questions = loadQuestions(questionPath);
             for (Question q : questions) {
                 System.out.println("Question: " + q.question);

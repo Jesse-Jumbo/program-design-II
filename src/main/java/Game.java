@@ -13,7 +13,7 @@ public class Game extends JFrame {
     private void initUI() {
         gsm = new GameStateManager(this); // 將 Game 傳遞給 GameStateManager
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(800, 600);
+        setSize(1000, 600);
         setLocationRelativeTo(null);
         setVisible(true);
     }

@@ -11,7 +11,8 @@ public class LevelPanel extends GameState {
     private int correctCount = 0;
     private int wrongCount = 0;
     private List<Question> questions;
-    private JLabel questionLabel;
+    private JTextArea questionTextArea;
+    private JScrollPane scrollPane;
     private JButton[] optionButtons;
     private int level;
     private int chapter;
@@ -59,15 +60,21 @@ public class LevelPanel extends GameState {
         questionPanel.setOpaque(false);
         questionPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10)); // 設置邊距
 
-        questionLabel = new JLabel();
-        questionLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        questionLabel.setVerticalAlignment(SwingConstants.CENTER);
-        questionLabel.setOpaque(false);
-        questionLabel.setPreferredSize(new Dimension(400, 100)); // 設置最小和最大寬度為400像素，最小高度為100像素
-        questionLabel.setMaximumSize(new Dimension(400, Integer.MAX_VALUE));
-        questionLabel.setMinimumSize(new Dimension(400, 100));
+        // 使用 JTextArea 來顯示問題
+        questionTextArea = new JTextArea();
+        questionTextArea.setLineWrap(true);
+        questionTextArea.setWrapStyleWord(true);
+        questionTextArea.setOpaque(false);
+        questionTextArea.setEditable(false);
+        questionTextArea.setFont(new Font("Serif", Font.PLAIN, 18));
 
-        questionPanel.add(questionLabel, BorderLayout.CENTER);
+        scrollPane = new JScrollPane(questionTextArea); // 初始化 scrollPane
+        scrollPane.setOpaque(false);
+        scrollPane.getViewport().setOpaque(false);
+        scrollPane.setPreferredSize(new Dimension(400, 400)); // 設置寬高
+        scrollPane.setMinimumSize(new Dimension(400, 100));
+        scrollPane.setMaximumSize(new Dimension(400, 400));
+        questionPanel.add(scrollPane, BorderLayout.CENTER);
 
         // 將問題面板放在一個額外的容器中，使其居中對齊
         JPanel questionContainer = new JPanel(new GridBagLayout());
@@ -156,9 +163,19 @@ public class LevelPanel extends GameState {
         }
 
         Question question = questions.get(currentQuestionIndex);
-        questionLabel.setText("<html>" + question.question.replace("\n", "<br>") + "</html>");
-        questionLabel.revalidate(); // 重新驗證佈局
-        questionLabel.repaint(); // 重新繪製
+        questionTextArea.setText(question.question);
+        questionTextArea.revalidate(); // 重新驗證佈局
+        questionTextArea.repaint(); // 重新繪製
+
+        // 動態調整 scrollPane 的高度
+        int textLength = question.question.length();
+        int lineHeight = questionTextArea.getFontMetrics(questionTextArea.getFont()).getHeight();
+        int lines = (int) Math.ceil(textLength / 40.0); // 一行 40 個字
+        int height = lines * lineHeight;
+        scrollPane.setPreferredSize(new Dimension(400, Math.min(height + 50, 400)));
+
+        // 滾動條默認在上方
+        SwingUtilities.invokeLater(() -> scrollPane.getVerticalScrollBar().setValue(0));
     }
 
     private void checkGameOver() {

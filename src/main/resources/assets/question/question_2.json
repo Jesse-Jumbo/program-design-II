@@ -70,9 +70,9 @@
     "explanation": "訪問權限為 public > protected > default > private"
   },
   {
-    "question": "Q: 在Java中，在字串前面加上什麼符號，則字串中的轉義字符將不被處理?\nA @\nB \\\nC #\nD %",
+    "question": "Q: 在Java中，在字串前面加上什麼符號，則字串中的轉義字符將不被處理?\nA @\nB \\\\nC #\nD %",
     "answer": "B",
-    "explanation": "在 Java 中，沒有直接的符號可以使字串中的轉義字符不被處理。然而，為了在字串中表示反斜杠（\\）本身，需要使用雙反斜杠（\\），這樣可以使字串中的轉義字符不被處理。"
+    "explanation": "在 Java 中，沒有直接的符號可以使字串中的轉義字符不被處理。然而，為了在字串中表示反斜杠（\\）本身，需要使用雙反斜杠（\\\\），這樣可以使字串中的轉義字符不被處理。"
   },
   {
     "question": "Q: 下列程式在第幾行會出錯?\n1) public void modify() {\n2) int I, j, k;\n3) I = 100;\n4) while ( I > 0 ) {\n5) j = I * 2;\n6) System.out.println (” The value of j is ” + j );\n7) k = k + 1;\n8) I–;  }\n9) }\nA 4\nB 6\nC 7\nD 8",

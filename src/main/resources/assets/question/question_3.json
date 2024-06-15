@@ -1,0 +1,102 @@
+[
+  {
+    "question": "Q: 下列哪一個可以在A的子類中使用：\nclass A {\nprotected int method1 (int a, int b) {\nreturn 0;}\n}\nA public int method 1 (int a, int b) { return 0; }\nB private int method1 (int a, int b) { return 0; }\nC private int method1 (long a, long b) { return 0; }\nD public short method1 (int a, int b) { return 0; }",
+    "answer": "A",
+    "explanation": "主要考查子類覆寫(overwrite)父類的方法的原則\nB：子類重寫父類的方法，訪問權限不能降低\nC：為方法重載（overload），但由於訪問修飾符不符合規則，仍然不可行。\nD：子類覆寫(overwrite)父類的方法，返回值類型要相同或是父類方法返回值類型的子類"
+  },
+  {
+    "question": "Q: What will be the output when you compile and execute the following program?\nclass Base {\n    void test() {\n        System.out.println(\"Base.test()\");\n    }\n}\npublic class Child extends Base {\n    void test() {\n        System.out.println(\"Child.test()\");\n    }\n    public static void main(String[] a) {\n        Child anObj = new Child();\n        Base baseObj = (Base) anObj;\n        baseObj.test();\n    }\n}\nA Child.test()Base.test()\nB Base.test()Child.test()\nC Base.test()\nD Child.test()",
+    "answer": "D",
+    "explanation": "測試程式相當於 Base baseObj = new Child(); 父類的引用指向子類的實例，子類又覆寫了父類的test方法，因此調用子類的test方法。"
+  },
+  {
+    "question": "Q: What will be the output when you compile and execute the following program?\nclass Base {\n    static void test() {\n        System.out.println(\"Base.test()\");\n    }\n}\npublic class Child extends Base {\n    void test() {\n        System.out.println(\"Child.test()\");\n        Base.test();\n    }\n    public static void main(String[] a) {\n        new Child().test();\n    }\n}\nA Child.test()Base.test()\nB Child.test()Child.test()\nC Compilation error. Cannot override a static method by an instance method\nD Runtime error. Cannot override a static method by an instance method",
+    "answer": "C",
+    "explanation": "靜態方法不能在子類中被覆寫"
+  },
+  {
+    "question": "Q: 關於以下程式說明正確的是：\n1． class HasStatic{\n2．      private static int x=100；\n3．      public static void main(String args[ ]){\n4．          HasStatic hs1=new HasStatic( );\n5．          hs1.x++;\n6．          HasStatic hs2=new HasStatic( );\n7．          hs2.x++;\n8．          hs1=new HasStatic( );\n9．          hs1.x++;\n10．        HasStatic.x–;\n11．        System.out.println(“x=”+x); \n12.       }\n13．}\nA 第5行不能通過編譯，因爲引用了私有靜態變量\nB 第10行不能通過編譯，因爲x是私有靜態變量\nC 程式通過編譯，輸出結果爲：x=103\nD 程式通過編譯，輸出結果爲：x=102",
+    "answer": "D",
+    "explanation": "靜態變量是所有對象所共享的，所以上述程式中的幾個對象操作是同一靜態變量x， 靜態變量可以通過類名調用。"
+  },
+  {
+    "question": "Q: 下列程式的執行結果是？\nimport java.util.*;\npublic class ShortSet {\n    public static void main(String args[]) {\n        Set<Short> s = new HashSet<Short>();\n        for (Short i = 0; i < 100; i++) {\n            s.add(i);\n            s.remove(i - 1);\n        }\n        System.out.println(s.size());\n    }\n}\nA Throws exception\nB 1\nC 100\nD None of the above",
+    "answer": "C",
+    "explanation": "i是Short類型 i-1是int類型,其包裝類爲Integer，所以s.remove(i-1);不能移除Set集合中Short類型對象。"
+  },
+  {
+    "question": "Q: Link list 不具有的特點是：\nA 不必事先估計存儲空間\nB 可隨機訪問任一元素\nC 插入刪除不需要移動元素\nD 所需空間與線性表長度成正比",
+    "answer": "B",
+    "explanation": "A 採用動態存儲分配，不會造成內存浪費和溢出。\nB 不能隨機訪問，查找時要從頭指針開始遍歷\nC 插入、刪除時，只要找到對應前驅結點，修改指標即可，無需移動元素\nD 需要用額外空間存儲線性表的關係，存儲密度小"
+  },
+  {
+    "question": "Q: Which method must be defined by a class implementing the java.lang.Runnable interface?\nA. void run()\nB. public void run()\nC. public void start()\nD. void run(int priority)",
+    "answer": "B",
+    "explanation": "實現Runnable介面，介面中有一個抽象方法run，實現類中實現該方法。"
+  },
+  {
+    "question": "Q: Given:\npublic static void main(String[] args) {\n    Object obj = new Object() {\n        public int hashCode() {\n            return 42;\n        }\n    };\n    System.out.println(obj.hashCode());\n}\nWhat is the result?\nA 42\nB An exception is thrown at runtime.\nC Compilation fails because of an error\nD None of the above",
+    "answer": "A",
+    "explanation": "Anonymous inner classes覆蓋hashCode方法，結尾部分應多一個分號。"
+  },
+  {
+    "question": "Q: Which two are reserved words in the Java programming language?\nA. run、import\nB. import、implements\nC. default、import\nD. implements、default",
+    "answer": "B",
+    "explanation": "import為導入package的保留字，implements為實現介面的保留字。"
+  },
+  {
+    "question": "Q: Given:\npublic class Test {\n    private static float[] f = new float[2];\n    public static void main(String args[]) {\n        System.out.println(\"f[0] = \" + f[0]);\n    }\n}\nWhat is the result?\nA f[0] = 0\nB f[0] = 0.0\nC Compilation fails.\nD An exception is thrown at runtime.",
+    "answer": "B",
+    "explanation": "在 Java 中，float 陣列的元素會自動初始化為 0.0。所以 f[0] 的值是 0.0，程式輸出 f[0] = 0.0。"
+  },
+  {
+    "question": "Q: Given:\npublic class Test {\n    public static void main(String[] args) {\n        String str = NULL;\n        System.out.println(str);\n    }\n}\nWhat is the result?\nA NULL\nB An exception is thrown at runtime.\nC The code runs with no output.\nD Compilation fails.",
+    "answer": "D",
+    "explanation": "null應該小寫"
+  },
+  {
+    "question": "Q: Exhibit:\n1.  public class X implements Runnable {\n2.    private int x;\n3.     private int y;\n4.     public static void main(String [] args) {\n5.         X that = new X();\n6.         (new Thread(that)).start();\n7.         (new Thread(that)).start();\n8.     }\n9.    public synchronized void run() {\n10.      for (;;) {\n11.           x++;\n12.           y++;\n13.           System.out.println(\"x = \" + x + \", y = \" + y);\n14.      }\n15.   }\n16. }\nWhat is the result?\nA An error at line 11 causes compilation to fail.\nB Errors at lines 7 and 8 cause compilation to fail.\nC The program prints pairs of values for x and y that might not always be the same on the same line\nD The program prints pairs of values for x and y that are always the same on the same line",
+    "answer": "D",
+    "explanation": "多線程共享相同的數據，用synchronized實現數據同步。"
+  },
+  {
+    "question": "Q: Which two cannot directly cause a thread to stop executing? \nA Existing from a synchronized block.\nB Calling the wait method on an object.\nC Calling notify method on an object.\nD Calling the SetPriority method on a Thread object.",
+    "answer": "A",
+    "explanation": "stop方法將終止所有未結束的方法，包括run方法。當一個線程停止，他會立即釋放所有他鎖住物件上的鎖。這會導致物件處於不一致的狀態。你應該中斷一個線程而不是停止他。"
+  },
+  {
+    "question": "Q: Which declarations prevent the overriding of a method?\nA void final methoda() {}\nB final void methoda() {}\nC. static void methoda() {}\nE. final abstract void methoda() {}",
+    "answer": "B",
+    "explanation": "final修飾方法，在子類中不能被重寫。"
+  },
+  {
+    "question": "Q: Given:\n1. public class Test {\n2.     public static void main (String args[]) {\n3.         class Foo {\n4.             public int i = 3;\n5.         }\n6.         Object o = (Object) new Foo();\n7.         Foo foo = (Foo) o;\n8.         System.out.println(foo.i);\n9.     }\n10.}\nWhat is the result?\nA Compilation will fail.\nB Compilation will succeed but the program will throw a ClassCastException at line 6.\nC Compilation will succeed and the program will print “3”\nD Compilation will succeed but the program will throw a ClassCastException at line 7.",
+    "answer": "C",
+    "explanation": "局部內部類的使用，在 main 方法內部定義了類 Foo，其中有一個整數變量 i，初始值為 3。創建了一個 Foo 對象並將其轉換為 Object 類型，將 Object 類型的變量強制轉換回 Foo 類型。"
+  },
+  {
+    "question": "Q: Given:\npublic class Test {\n    public static void main (String [] args) {\n        String foo = \"blue\";\n        String bar = foo;\n        foo = \"green\";\n        System.out.println(bar);\n    }\n}\nWhat is the result?\nA An exception is thrown.\nB The code will not compile.\nC The program prints “null”\nD The program prints “blue”",
+    "answer": "D",
+    "explanation": "採用String foo = “blue”定義方式定義的字符串放在字符串池中，通過String bar = foo;他們指向了同一地址空間，當執行foo = “green”; foo指向新的地址空間。"
+  },
+  {
+    "question": "Q: Which code determines the int value foo closest to a double value bar?\nA int foo = (int) Math.max(bar);\nB int foo = (int) Math.min(bar);\nC int foo = (int) Math.abs(bar);\nD int foo = (int) Math.ceil(bar);",
+    "answer": "D",
+    "explanation": "A跟B兩個選項方法是用錯誤，都是兩個參數。\nC的abs方法是取bar的絕對值。D的ceil方法返回最小的（最接近負無窮大）double 值，該值大於等於參數，並等於某個整數。"
+  },
+  {
+    "question": "Q: Given:\n1. public interface Foo{\n2. int k = 4;\n3. }\nWhich one is equivalent to line 2?\nA final int k = 4;\nB Public int k = 4;\nC static int k = 4;\nD Abstract int k = 4;",
+    "answer": "B",
+    "explanation": "static：修飾的是靜態變量、final 修飾的是常量、abstract不能修飾變量"
+  },
+  {
+    "question": "Q: Exhibit:\npublic class SwitchTest {\n    public static void main (String []args) {\n        System.out.println(\"value = \" + switchIt(4));\n    }\n    public static int switchIt(int x) {\n        int j = 1;\n        switch (x) {\n            case 1: j++;\n            case 2: j++;\n            case 3: j++;\n            case 4: j++;\n            case 5: j++;\n            default: j++;\n        }\n        return j + x;\n    }\n}\nWhat is the output from line 3?\nA Value =8\nB Value =6\nC Value =4\nD Value =3",
+    "answer": "A",
+    "explanation": "由於case塊沒有break語句，那麼從case 4：向下的代碼都會執行。"
+  },
+  {
+    "question": "Q: 在下列程式的第6行補充哪個方法，會導致在編譯過程中發生錯誤?\n1.class Super {\n2.    public float getNum() {\n3.        return 3.0f;\n4.    }\n5.}\n6.public class Sub extends Super {\n7.}\nA,public float getNum(){retun 4.0f;}\nB.public void getNum(){}\nC.public void getNum(double d){}\nD.public double getNum(float d){ retun 4.0f ;}",
+    "answer": "B",
+    "explanation": "方法覆寫的問題。子類中有和父類的方法名相同，但是參數不同，不會出編譯錯誤而是子類的特有的方法，但是如果子類中方法和父類的方法名，參數，訪問權限，異常都相同，只有返回值類型不同會編譯失敗。"
+  }
+]

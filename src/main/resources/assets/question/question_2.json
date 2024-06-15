@@ -1,0 +1,102 @@
+[
+  {
+    "question": "Q: Abstract method cannot be static. True or False?\nA True\nB False\nC I don’t know\nD I don’t care",
+    "answer": "A",
+    "explanation": "抽象方法可以在子類中被重寫，但是靜態方法不能在子類中被重寫，靜態方法和靜態屬性與對象是無關的，只與類有關，這與abstract是矛盾的，所以abstract是不能被修飾爲static，否則就失去了abstract的意義了。"
+  },
+  {
+    "question": "Q: What will be the output when you compile and execute the following program?\npublic class Base{\nprivate void test() {\nSystem.out.println(6 + 6 + “(Result)”);}\nstatic public void main(String[] a) {\nnew Base().test();}\n}\nSelect the most appropriate answer.\nA 66(Result)\nB 12(Result)\nC Runtime Error.Incompatible type for +. Can’t convert an int to a string.\nD Compilation Error.Incompatible type for +. Can’t add a string to an int",
+    "answer": "B",
+    "explanation": "字符串與基本數據類型鏈接的問題,如果第一個是字符串那麼後續就都按字符串處理，比如上邊例子要是System.out.println(“(Result)”+6 + 6 );那麼結果就是(Result)66，如果第一個和第二個…第n個都是基本數據第n+1是字符串類型，那麼前n個都按加法計算出結果在與字符串連接。"
+  },
+  {
+    "question": "Q: What will be the output when you compile and execute the following program? The symbol \"?\" means space.\npublic class Base{\nprivate void test() {\nString aStr = “?One?”;\nString bStr = aStr;\naStr.toUpperCase();\naStr.trim();\nSystem.out.println(“[\" + aStr + \",\" + bStr + \"]“);\n}\nstatic public void main(String[] a) {\nnew Base().test(); }\n}\nA [ONE,?One?]\nB [?One?,One]\nC [ONE,One]\nD One?,?One?",
+    "answer": "D",
+    "explanation": "通過String bStr = aStr;這句代碼使bStr和aStr指向同一個地址空間，所以最後aStr和bStr的結果應該是一樣，String類是定長字符串，調用一個字符串的方法以後會形成一個新的字符串。"
+  },
+  {
+    "question": "Q: 下面關於變量及其範圍的陳述哪些是不正確的（ ）：\nA 實例變量是類的成員變量\nB 靜態變量用關鍵字static聲明\nC 在方法中定義的局部變量在該方法被執行時創建\nD 局部變量在使用前必須被初始化",
+    "answer": "C",
+    "explanation": "在方法中定義的局部變量在該方法被調用時創建，而不是在方法加載的時候創建。"
+  },
+  {
+    "question": "Q: 下列關於修飾符混用的說法，錯誤的是（ ）：\nA abstract不能與final並列修飾同一個類\nB abstract類中可以有private的成員\nC abstract方法必須在abstract類中\nD static方法中能處理非static的屬性",
+    "answer": "D",
+    "explanation": "靜態方法中不能引用非靜態的成員"
+  },
+  {
+    "question": "Q: 執行完以下代碼int [ ] x = new int[25]；後，以下哪項說明是正確的（ ）：\nA x[24]爲0\nB x[24]未定義\nC x[25]爲0\nD x[0]爲空",
+    "answer": "A",
+    "explanation": "x屬於引用類型，該引用類型的每一個成員是int類型，默認值爲：0"
+  },
+  {
+    "question": "Q: 編譯運行以下程式後，關於輸出結果的說明正確的是 （ ）：\npublic class Conditional{\npublic static void main(String args[ ]){\nint x=4;\nSystem.out.println(“value is “+ ((x>4) ? 99.9 : 9));}\n}\nA 輸出結果爲：value is 99.99\nB 輸出結果爲：value is 9\nC 輸出結果爲：value is 9.0\nD 編譯錯誤",
+    "answer": "C",
+    "explanation": "三元運算符中：第二個表達式和第三個表達式中如果都爲基本數據類型，整個表達式的運算結果由容量高的決定。99.9是double類型 而9是int類型，double容量高，故輸出9.0。"
+  },
+  {
+    "question": "Q: 下列說法正確的有（）:\nA class中的constructor不可省略\nB constructor必須與class同名，但方法不能與class同名\nC constructor在一個對象被new時執行\nD 一個class只能定義一個constructor",
+    "answer": "C",
+    "explanation": "構造方法的作用是在實例化對象的時候給數據成員進行初始化。A：類中如果沒有顯示的給出構造方法，系統會提供一個無參構造方法；B：構造方法與類同名，類中可以有和類名相同的方法；D：構造方法可以重複。"
+  },
+  {
+    "question": "Q: 下列哪種說法是正確的（）:\nA 實例方法可直接調用super類的實例方法\nB 實例方法可直接調用super類的類方法\nC 實例方法可直接調用其他類的實例方法\nD 實例方法可直接調用本類的類方法",
+    "answer": "D",
+    "explanation": "A 實例方法不可直接調用超類的私有實例方法\nB 實例方法不可直接調用超類的私有的類方法\nC 要看訪問權限"
+  },
+  {
+    "question": "Q: 下列哪一種敘述是正確的（ ）\nA abstract修飾符可修飾字段、方法和類\nB abstract方法的body部分必須用一對大括號{ }包住\nC 聲明abstract方法，大括號可有可無\nD 聲明abstract方法不可寫出大括號",
+    "answer": "D",
+    "explanation": "abstract可以修飾方法和類，不能修飾屬性。抽象方法沒有方法體，即沒有大括號{}。"
+  },
+  {
+    "question": "Q: Java語言中，String類的IndexOf()方法返回的類型是？\nA Int16\nB Int32\nC int\nD long",
+    "answer": "C",
+    "explanation": "indexOf方法的聲明爲：public int indexOf(int ch)\n在此對象表示的字符序列中第一次出現該字符的索引；如果未出現該字符，則返回 -1。"
+  },
+  {
+    "question": "Q: 以下關於OOP的描述中，不正確的選項是（）：\nA 在現實生活中，物件是指客觀世界的實體\nB 程式中的物件就是現實生活中的物件\nC 在程式中，物件是通過一種抽象數據類型來描述的，這種抽象數據類型稱爲類（class）\nD 在程式中，物件是一組變量和相關方法的集合",
+    "answer": "B",
+    "explanation": "不要虛實不分"
+  },
+  {
+    "question": "Q: 執行下列程式後,哪個結論是正確的？\nString[] s=new String[10];\nA s[9] 爲 null;\nB s[10] 爲 “”;\nC s[0] 爲 未定義\nD s.length 爲 9",
+    "answer": "A",
+    "explanation": "s是引用類型，s中的每一個成員都是引用類型，即String類型，String類型默認的值爲null，s數組的長度爲10。"
+  },
+  {
+    "question": "Q: 下列修飾符訪問權限最小的為何?\nA public\nB private\nC default\nD protected",
+    "answer": "B",
+    "explanation": "訪問權限為 public > protected > default > private"
+  },
+  {
+    "question": "Q: 在Java中，在字串前面加上什麼符號，則字串中的轉義字符將不被處理?\nA @\nB \\\nC #\nD %",
+    "answer": "B",
+    "explanation": "在 Java 中，沒有直接的符號可以使字串中的轉義字符不被處理。然而，為了在字串中表示反斜杠（\\）本身，需要使用雙反斜杠（\\），這樣可以使字串中的轉義字符不被處理。"
+  },
+  {
+    "question": "Q: 下列程式在第幾行會出錯?\n1) public void modify() {\n2) int I, j, k;\n3) I = 100;\n4) while ( I > 0 ) {\n5) j = I * 2;\n6) System.out.println (” The value of j is ” + j );\n7) k = k + 1;\n8) I–;  }\n9) }\nA 4\nB 6\nC 7\nD 8",
+    "answer": "C",
+    "explanation": "k沒有初始化就使用了"
+  },
+  {
+    "question": "Q: Stack是一種：\nA 存取受限的線性結構\nB 存取不受限的線性結構\nC 存取受限的非線性結構\nD 存取不受限的非線性結構",
+    "answer": "A",
+    "explanation": "Stack在計算機科學中是限定僅在表尾進行插入或刪除操作。"
+  },
+  {
+    "question": "Q: 下列哪些語句關於Garbage Collection的說明是正確的?\nA 必須創建一個線程(執行緒)來釋放內存\nB Garbage Collection負責釋放無用內存\nC Garbage Collection允許直接釋放內存\nD Garbage Collection可以在指定的時間釋放內存對象",
+    "answer": "B",
+    "explanation": "Garbage Collection在Java中的執行是自動的，不能強制執行，即使我們能明確地判斷出有一個內存已經無用了應該回收，我們也不能強制Garbage Collection回收該內存。唯一能做的就是通過調用System. gc 方法來\"建議\"執行垃圾收集器。"
+  },
+  {
+    "question": "Q: What is the numerical range of a char?\nA 0 … 32767\nB 0 … 65535\nC –256 … 255\nD –32768 … 32767\nE Range is platform dependent.",
+    "answer": "B",
+    "explanation": "在Java中，char是一個無符號16位類型，取值範圍爲0到65535。"
+  },
+  {
+    "question": "Q: 關於java.lang.String類，以下描述正確的一項是：\nA String類是final類，故不可以繼承\nB String類是final類，故可以繼承\nC String類不是final類，故不可以繼承\nD String類不是final類，故可以繼承",
+    "answer": "A",
+    "explanation": "String類是final的，在java中final修飾類的不能被繼承"
+  }
+]

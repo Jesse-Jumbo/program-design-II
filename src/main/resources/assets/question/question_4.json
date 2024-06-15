@@ -1,0 +1,102 @@
+[
+  {
+    "question": "Q: 關於以下application的說明，正確的是：\n1． class StaticStuff\n2． {\n3． static int x=10；\n4． static { x+=5；}\n5． public static void main（String args[ ]）\n6． {\n7． System.out.println(“x=” + x);\n8． }\n9． static { x/=3;}\n10. }\nA 第4行與第9行不能通過編譯，因爲缺少方法名和返回類型\nB 第9行不能通過編譯，因爲只能有一個靜態初始化器\nC 編譯通過，執行結果爲：x=5\nD 編譯通過，執行結果爲：x=3",
+    "answer": "C",
+    "explanation": "Block是類overload的時候就會被執行到的，Block的執行順序是按照在類中出現的先後順序執行。"
+  },
+  {
+    "question": "Q: 對{314，298，508，123，486，145}用從小到大的順序進行插入排序法(Insertion Sort)，經過兩趟排序後的結果爲：\nA {314，298，508，123，145，486}\nB {298，314，508，123，486，145}\nC {298，123，314，508，486，145}\nD {123、298，314，508，486，145}",
+    "answer": "B",
+    "explanation": "插入排序法的基本步驟是：從第二個元素開始，將其與前面的元素進行比較，插入到正確的位置上。接著重複這個過程，直到所有元素都被排序。"
+  },
+  {
+    "question": "Q: Which statement is true regarding the return values of property written hashCode and equals methods from two instances of the same class? \nA If the hashCode values are the same, the objects might be equal.\nB If the hashCode values are different, the objects might be equal.\nC If the hashCode values are the same, the object must be equal.\nD If the hashCode values are different, the objects must be equal.",
+    "answer": "A",
+    "explanation": "先通過 hashcode來判斷某個對象是否存放某個bucket裏，但這個bucket裏可能有很多對象，那麼我們就需要再通過 equals 來在這個bucke裏找到我們要的對象。"
+  },
+  {
+    "question": "Q: Which statement is true regarding the creation of a default constructor?\nA The default constructor initializes method variables.\nB The default constructor invokes the no-parameter constructor of the superclass.\nC The default constructor initializes the instance variables declared in the class.\nD If a class lacks a no-parameter constructor,, but has other constructors, the compiler creates a default constructor.",
+    "answer": "C",
+    "explanation": "構造方法的作用是實例化對象的時候給數據成員初始化，如果類中沒有顯示的提供構造方法，系統會提供默認的無參數構造方法，如果有了其它構造方法，默認的構造方法不再提供。"
+  },
+  {
+    "question": "Q: Given:\npublic class OuterClass {\nprivate double d1 = 1.0;\n//insert code here\n}\nYou need to insert an inner class declaration at line3. Which inner class declaration is valid?\nA static class InnerOne { public double methoda() {return d1;} }\nB static class InnerOne { static double methoda() {return d1;} }\nC protected class InnerOne { static double methoda() {return d1;} }\nD private class InnerOne { public double methoda() {return d1;} }",
+    "answer": "D",
+    "explanation": "AB內部類可以聲明爲static的，但此時就不能再使用外層封裝類的非static的成員變量；C非static的內部類中的成員不能聲明爲static的，只有在頂層類或static的內部類中才可聲明static成員"
+  },
+  {
+    "question": "Q: Exhibit:\n1. package foo;\n2. import java.util.Vector;\n3. private class MyVector extends Vector {\n4.     int i = 1;\n5.     public MyVector() {\n6.         i = 2;\n7.     }\n8. }\n9. public class MyNewVector extends MyVector {\n10.    public MyNewVector() {\n11.        i = 4;\n12.   }\n13.    public static void main(String args[]) {\n14.        MyVector v = new MyNewVector();\n15.    }\n16.}\nThe file MyNewVector.java is shown in the exhibit. What is the result?\nA Compilation will succeed.\nB Compilation will fail at line 3.\nC Compilation will fail at line 6.\nD Compilation will fail at line 9.",
+    "answer": "B",
+    "explanation": "類MyVector不能是私有的"
+  },
+  {
+    "question": "Q: Given:\npublic class Test {\n    public static void main (String[]args) {\n        String foo = args[1];\n        String bar = args[2];\n        String baz = args[3];\n        System.out.println(“baz = ” + baz);\n    }\n}\nAnd the output : baz = 2\nWhich command line invocation will produce the output?\nA java Test 2222\nB java Test 1 2 3 4\nC java Test 4 2 4 2\nD java Test 4 3 2 1",
+    "answer": "C",
+    "explanation": "args從0開始計"
+  },
+  {
+    "question": "Q: Given:\npublic class foo {\n    static String s;\n    public static void main (String[]args) {\n        System.out.println (“s=” + s);\n    }\n}\nWhat is the result?\nA. The code compiles and “s=” is printed.\nB. The code compiles and “s=null” is printed.\nC. The code does not compile because string s is not initialized.\nD. The code does not compile because string s cannot be referenced.",
+    "answer": "B",
+    "explanation": "String爲禁用數據類型，引用類型數據成員的默認值爲null"
+  },
+  {
+    "question": "Q: Which one creates an instance of an array?\nA int[ ] ia = new int [15];\nB float fa = new float [20];\nC char[ ] ca = “Some String”;\nD Int ia [ ][ ] = (4, 5, 6) (1, 2, 3)",
+    "answer": "A",
+    "explanation": "任何類的父類都是Object，數組也數據引用類型，Object oa = new float[20];這種寫法相當於父類的用指向之類的實例。"
+  },
+  {
+    "question": "Q: Given:\npublic class ExceptionTest {\n    class TestException extends Exception {}\n    public void runTest () throws TestException {}\n    public void test () /* Point X*/ {\n        runTest ();\n    }\n}\nAt point X on line 4, which code can be added to make the code compile?\nA. throws Exception\nB. Catch (Exception e).\nC. Throws RuntimeException.\nD. Catch (TestException e).",
+    "answer": "A",
+    "explanation": "使用throws拋出異常，Exception是異常類的super類。"
+  },
+  {
+    "question": "Q: Which type of objects cannot be thrown using the throw statement?\nA Error\nB Exception\nC RuntimeException\nD Object",
+    "answer": "D",
+    "explanation": "能夠拋出的對象類型要是Throwable 或是Throwable的子類"
+  },
+  {
+    "question": "Q: 下列關於import, class和package的聲明順序哪個正確？\nA. package, import, class\nB. class, import, package\nC. import, package, class\nD. package, class, import",
+    "answer": "A",
+    "explanation": ""
+  },
+  {
+    "question": "Q: 下列哪一項是正確的？\nA String temp [ ] = new String {“a” “b” “c”};\nB String temp [ ] = {“a” “b” “c”}\nC String temp = {“a”, “b”, “c”}\nD String temp [ ] = {“a”, “b”, “c”}",
+    "answer": "D",
+    "explanation": ""
+  },
+  {
+    "question": "Q: 關於實例方法和類方法，以下描述正確的是\nA 實例方法只能訪問實例變量\nB 類方法既可以訪問類變量，也可以訪問實例變量\nC 類方法只能通過類名來調用\nD 實例方法只能通過對象來調用",
+    "answer": "D",
+    "explanation": "A 實例方法可以訪問類變量；B類方法只能訪問類變量；C類方法可以通過對象調用"
+  },
+  {
+    "question": "Q: 已知介面是Java物件導向的實現機制之一，以下正確的為：\nA Java支持多重繼承，一個類可以實現多個介面；\nB Java只支持單一繼承，一個類可以實現多個介面；\nC Java只支持單一繼承，一個類只可以實現一個介面；\nD Java支持多重繼承，但一個類只可以實現一個介面。",
+    "answer": "B",
+    "explanation": ""
+  },
+  {
+    "question": "Q: 下列關於interface的說法正確的是：\nA interface中可以有private方法\nB interface中可以有final方法\nC interface中可以有function實現\nD interface可以繼承其他interface",
+    "answer": "D",
+    "explanation": "A介面中不可以有private的方法，B介面中不可以有final的方法且介面中的方法默認是 public abstract 的，C介面中的方法不可以有實現"
+  },
+  {
+    "question": "Q: 已知A類在 packageA , B類在 packageB ，且B類被聲明爲public，且有一個成員變量x被聲明爲 protected 。C類也位於packageA ，且繼承了B類 。則以下正確的是：\nA A類的實例不能訪問到B類的實例\nB A類的實例能夠訪問到B類一個實例的x成員\nC C類的實例可以訪問到B類一個實例的x成員\nD C類的實例不能訪問到B類的實例",
+    "answer": "C",
+    "explanation": "不同package子類的關係， 可以訪問到父類B的protected成員"
+  },
+  {
+    "question": "Q: 以下程式正確的輸出是：\npackage test;\npublic class FatherClass {\n    public FatherClass() {\n        System.out.print(\"FatherClass Create \");\n    }\n}\npackage test;\nimport test.FatherClass;\npublic class ChildClass extends FatherClass {\n    public ChildClass() {\n        System.out.print(\"ChildClass Create \");\n    }\n    public static void main(String[] args) {\n        FatherClass fc = new FatherClass();\n        ChildClass cc = new ChildClass();\n    }\n}\nA FatherClass Create FatherClass Create ChildClass Create\nB FatherClass Create ChildClass Create FatherClass Create\nC ChildClass Create ChildClass Create FatherClass Create\nD ChildClass Create FatherClass Create FatherClass Create",
+    "answer": "A",
+    "explanation": "在子類構造方法的開始默認情況下有一句super();來調用父類的構造方法"
+  },
+  {
+    "question": "Q: 給定如下程式，下列哪一個可以作爲該類的構造函式?\npublic class Test {\n}\nA public void Test() {?}\nB public Test() {?}\nC public static Test() {?}\nD public static void Test() {?}",
+    "answer": "B",
+    "explanation": "構造方法：與類同名沒有放回類型"
+  },
+  {
+    "question": "Q: 請看下列程式碼：\n1. public class test (\n2.     public static void main (String args[]) {\n3.         int i = 0xFFFFFFF1;\n4.         int j = ~i;\n5.     }\n6. )\n程式運行到第4行時，j 的值爲多少?\nA –15\nB 0\nC 1\nD 14",
+    "answer": "D",
+    "explanation": "int i = 0xFFFFFFF1;相當於 int i=-15 然後對i進行取反即取絕對值再減一"
+  }
+]

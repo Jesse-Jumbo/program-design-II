@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class StoryGame extends JFrame implements MouseListener {
+public class StoryPanel extends JFrame implements MouseListener {
     private JLabel imageLabel;
     private ArrayList<ImageIcon> preludeImages;
     private ArrayList<ImageIcon> chapter1Images;
@@ -14,7 +14,7 @@ public class StoryGame extends JFrame implements MouseListener {
     private int currentChapter;
     private Map<Integer, ImageIcon> scaledImageCache;
 
-    public StoryGame() {
+    public StoryPanel() {
         // 初始化 JFrame
         setTitle("Program Design 2");
         setSize(960, 540); // 設置初始窗口大小為較小尺寸

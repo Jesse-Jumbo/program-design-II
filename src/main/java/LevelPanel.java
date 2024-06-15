@@ -114,7 +114,7 @@ public class LevelPanel extends GameState {
 
         // 加載玩家和怪物圖片
         playerLabel = new JLabel(loadImageIcon("assets/image/player.png"));
-        enemyLabel = new JLabel(loadImageIcon("assets/image/enemies/" + chapter + "_" + level + ".png"));
+        enemyLabel = new JLabel(scaleImageIcon(loadImageIcon("assets/image/enemies/" + chapter + "_" + level + ".png"), 0.5)); // 縮小圖片
         bgLabel.add(playerLabel, BorderLayout.WEST);
         bgLabel.add(enemyLabel, BorderLayout.EAST);
 
@@ -141,6 +141,13 @@ public class LevelPanel extends GameState {
         playBattleMusic(chapter, level);
 
         displayNextQuestion();
+    }
+
+    private ImageIcon scaleImageIcon(ImageIcon icon, double scale) {
+        int width = (int) (icon.getIconWidth() * scale);
+        int height = (int) (icon.getIconHeight() * scale);
+        Image img = icon.getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH);
+        return new ImageIcon(img);
     }
 
     private void filterQuestionsByLevel() {

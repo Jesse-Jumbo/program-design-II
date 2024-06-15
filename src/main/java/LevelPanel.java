@@ -1,10 +1,20 @@
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class LevelPanel extends GameState {
     private int currentQuestionIndex = 0;
@@ -21,13 +31,18 @@ public class LevelPanel extends GameState {
     private JLabel playerLabel;
     private JLabel enemyLabel;
     private MusicPlayer musicPlayer;
+    private Map<Integer, boolean[]> levelProgress;
 
     public LevelPanel(GameStateManager gsm, Game game, int chapter, int level) {
         super(gsm);
         this.chapter = chapter;
         this.level = level;
         this.musicPlayer = new MusicPlayer(); // 創建音樂播放器
+
         panel.setLayout(new BorderLayout());
+
+        // 加載遊戲進度
+        loadLevelProgress();
 
         try {
             String resourcePath = "assets/question/question_" + chapter + ".json";
@@ -71,7 +86,7 @@ public class LevelPanel extends GameState {
         scrollPane = new JScrollPane(questionTextArea); // 初始化 scrollPane
         scrollPane.setOpaque(false);
         scrollPane.getViewport().setOpaque(false);
-        scrollPane.setPreferredSize(new Dimension(400, 400)); // 設置寬高
+        scrollPane.setPreferredSize(new Dimension(400, 200)); // 設置寬度為400像素
         scrollPane.setMinimumSize(new Dimension(400, 100));
         scrollPane.setMaximumSize(new Dimension(400, 400));
         questionPanel.add(scrollPane, BorderLayout.CENTER);
@@ -183,6 +198,7 @@ public class LevelPanel extends GameState {
             musicPlayer.stop(); // 停止背景音樂
             playVictoryMusic(); // 播放勝利音樂
             JOptionPane.showMessageDialog(panel, "You Win!");
+            updateLevelProgress(chapter, level); // 更新遊玩進度
         } else {
             JOptionPane.showMessageDialog(panel, "You Lose!");
         }
@@ -232,6 +248,42 @@ public class LevelPanel extends GameState {
             System.err.println("Image not found: " + path);
             return null;
         }
+    }
+
+    private void loadLevelProgress() {
+        Gson gson = new Gson();
+        File file = new File("level_progress.json");
+        if (file.exists()) {
+            try (FileReader reader = new FileReader(file)) {
+                Type type = new TypeToken<Map<Integer, boolean[]>>() {}.getType();
+                levelProgress = gson.fromJson(reader, type);
+                if (levelProgress == null) {
+                    levelProgress = new HashMap<>();
+                }
+            } catch (IOException e) {
+                levelProgress = new HashMap<>();
+            }
+        } else {
+            levelProgress = new HashMap<>();
+            saveLevelProgress(); // 如果檔案不存在，創建一個新的
+        }
+    }
+
+    private void saveLevelProgress() {
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        try (FileWriter writer = new FileWriter("level_progress.json")) {
+            gson.toJson(levelProgress, writer);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void updateLevelProgress(int chapter, int level) {
+        if (!levelProgress.containsKey(chapter)) {
+            levelProgress.put(chapter, new boolean[5]);
+        }
+        levelProgress.get(chapter)[level - 1] = true;
+        saveLevelProgress();
     }
 
     @Override

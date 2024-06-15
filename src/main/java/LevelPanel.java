@@ -7,7 +7,6 @@ import java.util.Collections;
 import java.util.List;
 
 public class LevelPanel extends GameState {
-
     private int currentQuestionIndex = 0;
     private int correctCount = 0;
     private int wrongCount = 0;
@@ -15,14 +14,18 @@ public class LevelPanel extends GameState {
     private JLabel questionLabel;
     private JButton[] optionButtons;
     private int level;
+    private int chapter;
     private JLabel[] playerHearts;
     private JLabel enemyHeartLabel;
     private JLabel playerLabel;
     private JLabel enemyLabel;
+    private MusicPlayer musicPlayer;
 
     public LevelPanel(GameStateManager gsm, Game game, int chapter, int level) {
         super(gsm);
+        this.chapter = chapter;
         this.level = level;
+        this.musicPlayer = new MusicPlayer(); // 創建音樂播放器
         panel.setLayout(new BorderLayout());
 
         try {
@@ -93,19 +96,27 @@ public class LevelPanel extends GameState {
         bgLabel.add(playerLabel, BorderLayout.WEST);
         bgLabel.add(enemyLabel, BorderLayout.EAST);
 
-        // 加載玩家和怪物的愛心圖示
-        JPanel playerHeartsPanel = new JPanel(new GridLayout(1, getLoseCondition()));
+        // 設置左上角和右上角的愛心容器
+        JPanel topPanel = new JPanel(new BorderLayout());
+        bgLabel.add(topPanel, BorderLayout.NORTH);
+
+        // 設置玩家愛心圖示
+        JPanel playerHeartsPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         playerHearts = new JLabel[getLoseCondition()];
         for (int i = 0; i < getLoseCondition(); i++) {
             playerHearts[i] = new JLabel(loadImageIcon("assets/image/heart.png"));
             playerHeartsPanel.add(playerHearts[i]);
         }
-        bgLabel.add(playerHeartsPanel, BorderLayout.NORTH);
+        topPanel.add(playerHeartsPanel, BorderLayout.WEST);
 
-        JPanel enemyHeartsPanel = new JPanel(new GridLayout(1, 1));
+        // 設置怪物愛心圖示
+        JPanel enemyHeartsPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         enemyHeartLabel = new JLabel("X " + getWinCondition(), loadImageIcon("assets/image/heart.png"), JLabel.LEFT);
         enemyHeartsPanel.add(enemyHeartLabel);
-        bgLabel.add(enemyHeartsPanel, BorderLayout.NORTH);
+        topPanel.add(enemyHeartsPanel, BorderLayout.EAST);
+
+        // 播放戰鬥音樂
+        playBattleMusic(chapter, level);
 
         displayNextQuestion();
     }
@@ -152,11 +163,35 @@ public class LevelPanel extends GameState {
 
     private void checkGameOver() {
         if (correctCount >= getWinCondition()) {
+            musicPlayer.stop(); // 停止背景音樂
+            playVictoryMusic(); // 播放勝利音樂
             JOptionPane.showMessageDialog(panel, "You Win!");
         } else {
             JOptionPane.showMessageDialog(panel, "You Lose!");
         }
         gsm.setState(GameStateManager.PLAY);
+    }
+
+    private void playBattleMusic(int chapter, int level) {
+        String musicFile;
+        if (level == 5) {
+            musicFile = "assets/sound/" + chapter + ".mp3";
+        } else {
+            musicFile = "assets/sound/battle.mp3";
+        }
+        musicPlayer.play(musicFile, true); // 循環播放音樂
+    }
+
+    private void playVictoryMusic() {
+        String musicFile;
+        if (chapter == 5 && level == 5) {
+            musicFile = "assets/sound/victory_final_boss.mp3";
+        } else if (level == 5) {
+            musicFile = "assets/sound/victory_boss.mp3";
+        } else {
+            musicFile = "assets/sound/victory.mp3";
+        }
+        musicPlayer.play(musicFile, false); // 播放一次音樂
     }
 
     private int getWinCondition() {
@@ -165,6 +200,11 @@ public class LevelPanel extends GameState {
 
     private int getLoseCondition() {
         return level == 5 ? 5 : 3;
+    }
+
+    @Override
+    public void cleanup() {
+        musicPlayer.stop(); // 停止音樂
     }
 
     private ImageIcon loadImageIcon(String path) {
@@ -189,11 +229,6 @@ public class LevelPanel extends GameState {
     @Override
     public void render() {}
 
-    @Override
-    public void cleanup() {
-        // 清理資源
-    }
-
     private class OptionButtonListener implements ActionListener {
         private int optionIndex;
 
@@ -215,9 +250,10 @@ public class LevelPanel extends GameState {
             if (selectedAnswer == correctAnswer) {
                 correctCount++;
                 questions.remove(currentQuestionIndex);
+                enemyHeartLabel.setText("X " + (getWinCondition() - correctCount));
             } else {
                 wrongCount++;
-                playerHearts[wrongCount - 1].setIcon(loadImageIcon("assets/image/grey_heart.png"));
+                playerHearts[getLoseCondition() - wrongCount].setIcon(loadImageIcon("assets/image/grey_heart.png"));
             }
 
             if (correctCount >= getWinCondition() || wrongCount >= getLoseCondition()) {

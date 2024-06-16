@@ -1,0 +1,27 @@
+[
+    {
+      "path": "assets/chapter/PD2-previou",
+      "count": 24,
+      "type":"png"
+    },{
+      "path": "assets/chapter/PD2-s1",
+      "count": 197,
+      "type":"png"
+    },{
+      "path": "assets/chapter/PD2-s2",
+      "count": 224,
+      "type":"jpg"
+    },{
+      "path": "assets/chapter/PD2-s3",
+      "count": 208,
+      "type":"jpg"
+    },{
+      "path": "assets/chapter/PD2-s4",
+      "count": 184,
+      "type":"png"
+    },{
+      "path": "assets/chapter/PD2-s5",
+      "count": 105,
+      "type":"jpg"
+    }
+  ]

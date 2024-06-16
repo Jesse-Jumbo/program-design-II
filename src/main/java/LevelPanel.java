@@ -32,18 +32,31 @@ public class LevelPanel extends GameState {
     private JLabel enemyLabel;
     private MusicPlayer musicPlayer;
     private Map<Integer, boolean[]> levelProgress;
+    private JLabel bgLabel;
 
     public LevelPanel(GameStateManager gsm, Game game, int chapter, int level) {
         super(gsm);
         this.chapter = chapter;
         this.level = level;
-        this.musicPlayer = new MusicPlayer(); // 創建音樂播放器
-
+        this.musicPlayer = new MusicPlayer();
         panel.setLayout(new BorderLayout());
 
-        // 加載遊戲進度
         loadLevelProgress();
+        loadQuestions();
+        filterQuestionsByLevel();
+        Collections.shuffle(questions);
 
+        setupBackground();
+        setupQuestionPanel();
+        setupOptionsPanel();
+        setupCharacters();
+        setupTopPanel();
+
+        playBattleMusic(chapter, level);
+        displayNextQuestion();
+    }
+
+    private void loadQuestions() {
         try {
             String resourcePath = "assets/question/question_" + chapter + ".json";
             questions = QuizLoader.loadQuestions(resourcePath);
@@ -52,30 +65,28 @@ public class LevelPanel extends GameState {
             JOptionPane.showMessageDialog(panel, "Question file not found! Using default questions.");
             questions = QuizLoader.getDefaultQuestions(); // 使用預設問題集
         }
+    }
 
-        filterQuestionsByLevel();
-        Collections.shuffle(questions);
-
-        // 加載背景圖片
-        JLabel bgLabel = new JLabel(loadImageIcon("assets/image/bg/" + chapter + "_" + level + ".png"));
+    private void setupBackground() {
+        bgLabel = new JLabel(loadImageIcon("assets/image/bg/" + chapter + "_" + level + ".png"));
         bgLabel.setLayout(new BorderLayout());
         panel.add(bgLabel);
+    }
 
-        // 設置問題面板
+    private void setupQuestionPanel() {
         JPanel questionPanel = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
                 Graphics2D g2d = (Graphics2D) g;
-                g2d.setColor(new Color(255, 255, 255, 200)); // 設置透明度為200的白色背景
-                g2d.fillRoundRect(0, 0, getWidth(), getHeight(), 20, 20); // 繪製圓角矩形背景
+                g2d.setColor(new Color(255, 255, 255, 200));
+                g2d.fillRoundRect(0, 0, getWidth(), getHeight(), 20, 20);
             }
         };
         questionPanel.setLayout(new BorderLayout());
         questionPanel.setOpaque(false);
-        questionPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10)); // 設置邊距
+        questionPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-        // 使用 JTextArea 來顯示問題
         questionTextArea = new JTextArea();
         questionTextArea.setLineWrap(true);
         questionTextArea.setWrapStyleWord(true);
@@ -83,54 +94,54 @@ public class LevelPanel extends GameState {
         questionTextArea.setEditable(false);
         questionTextArea.setFont(new Font("Serif", Font.PLAIN, 18));
 
-        scrollPane = new JScrollPane(questionTextArea); // 初始化 scrollPane
+        scrollPane = new JScrollPane(questionTextArea);
         scrollPane.setOpaque(false);
         scrollPane.getViewport().setOpaque(false);
-        scrollPane.setPreferredSize(new Dimension(500, 200)); // 設置寬度為500像素
-        scrollPane.setMinimumSize(new Dimension(500, 200));
-        scrollPane.setMaximumSize(new Dimension(500, 400));
+        scrollPane.setPreferredSize(new Dimension(500, 200));
         questionPanel.add(scrollPane, BorderLayout.CENTER);
 
-        // 將問題面板放在一個額外的容器中，使其居中對齊
         JPanel questionContainer = new JPanel(new GridBagLayout());
         questionContainer.setOpaque(false);
         GridBagConstraints gbc = new GridBagConstraints();
-        gbc.gridx = 1; // 將位置設為更靠右
+        gbc.gridx = 1;
         gbc.gridy = 0;
         gbc.weightx = 1.0;
         gbc.weighty = 1.0;
         gbc.anchor = GridBagConstraints.CENTER;
         questionContainer.add(questionPanel, gbc);
         bgLabel.add(questionContainer, BorderLayout.CENTER);
+    }
 
+    private void setupOptionsPanel() {
         JPanel optionsPanel = new JPanel(new GridLayout(1, 4));
-        optionsPanel.setOpaque(false); // 設置 optionsPanel 為透明
+        optionsPanel.setOpaque(false);
         optionButtons = new JButton[4];
         for (int i = 0; i < 4; i++) {
             optionButtons[i] = new JButton(loadImageIcon("assets/image/options/" + (char) ('A' + i) + ".png"));
             optionButtons[i].setActionCommand(Character.toString((char) ('A' + i)));
-            optionButtons[i].setContentAreaFilled(false); // 使按鈕透明
-            optionButtons[i].setBorderPainted(false); // 移除按鈕邊框
-            optionButtons[i].setFocusPainted(false); // 移除按鈕焦點框
+            optionButtons[i].setContentAreaFilled(false);
+            optionButtons[i].setBorderPainted(false);
+            optionButtons[i].setFocusPainted(false);
             optionButtons[i].addActionListener(new OptionButtonListener(i));
             optionsPanel.add(optionButtons[i]);
         }
         bgLabel.add(optionsPanel, BorderLayout.SOUTH);
+    }
 
-        // 加載玩家和怪物圖片
+    private void setupCharacters() {
         playerLabel = new JLabel(loadImageIcon("assets/image/player.png"));
-        enemyLabel = new JLabel(scaleImageIcon(loadImageIcon("assets/image/enemies/" + chapter + "_" + level + ".png"), 0.5)); // 縮小圖片
+        enemyLabel = new JLabel(scaleImageIcon(loadImageIcon("assets/image/enemies/" + chapter + "_" + level + ".png"), 0.5));
         bgLabel.add(playerLabel, BorderLayout.WEST);
         bgLabel.add(enemyLabel, BorderLayout.EAST);
+    }
 
-        // 設置左上角和右上角的愛心容器
+    private void setupTopPanel() {
         JPanel topPanel = new JPanel(new BorderLayout());
-        topPanel.setOpaque(false); // 設置 topPanel 為透明
+        topPanel.setOpaque(false);
         bgLabel.add(topPanel, BorderLayout.NORTH);
 
-        // 設置玩家愛心圖示
         JPanel playerHeartsPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        playerHeartsPanel.setOpaque(false); // 設置 playerHeartsPanel 為透明
+        playerHeartsPanel.setOpaque(false);
         playerHearts = new JLabel[getLoseCondition()];
         for (int i = 0; i < getLoseCondition(); i++) {
             playerHearts[i] = new JLabel(loadImageIcon("assets/image/heart.png"));
@@ -138,17 +149,11 @@ public class LevelPanel extends GameState {
         }
         topPanel.add(playerHeartsPanel, BorderLayout.WEST);
 
-        // 設置怪物愛心圖示
         JPanel enemyHeartsPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        enemyHeartsPanel.setOpaque(false); // 設置 enemyHeartsPanel 為透明
+        enemyHeartsPanel.setOpaque(false);
         enemyHeartLabel = new JLabel("X " + getWinCondition(), loadImageIcon("assets/image/heart.png"), JLabel.LEFT);
         enemyHeartsPanel.add(enemyHeartLabel);
         topPanel.add(enemyHeartsPanel, BorderLayout.EAST);
-
-        // 播放戰鬥音樂
-        playBattleMusic(chapter, level);
-
-        displayNextQuestion();
     }
 
     private ImageIcon scaleImageIcon(ImageIcon icon, double scale) {
@@ -194,20 +199,24 @@ public class LevelPanel extends GameState {
 
         Question question = questions.get(currentQuestionIndex);
         questionTextArea.setText(question.question);
-        questionTextArea.revalidate(); // 重新驗證佈局
-        questionTextArea.repaint(); // 重新繪製
+        questionTextArea.revalidate();
+        questionTextArea.repaint();
 
-        // 動態調整 scrollPane 的高度
-        int textLength = question.question.length();
-        int lineHeight = questionTextArea.getFontMetrics(questionTextArea.getFont()).getHeight();
-        int lines = (int) Math.ceil(textLength / 40.0); // 一行 40 個字
-        int height = lines * lineHeight;
-        scrollPane.setPreferredSize(new Dimension(500, Math.min(height + 50, 400)));
+        adjustScrollPaneHeight(question.question.length());
 
-        // 滾動條默認在上方
         SwingUtilities.invokeLater(() -> scrollPane.getVerticalScrollBar().setValue(0));
 
-        // 恢復按鈕圖片
+        resetOptionButtons();
+    }
+
+    private void adjustScrollPaneHeight(int textLength) {
+        int lineHeight = questionTextArea.getFontMetrics(questionTextArea.getFont()).getHeight();
+        int lines = (int) Math.ceil(textLength / 40.0);
+        int height = lines * lineHeight;
+        scrollPane.setPreferredSize(new Dimension(500, Math.min(height + 50, 400)));
+    }
+
+    private void resetOptionButtons() {
         for (int i = 0; i < 4; i++) {
             optionButtons[i].setIcon(loadImageIcon("assets/image/options/" + (char) ('A' + i) + ".png"));
         }
@@ -215,10 +224,10 @@ public class LevelPanel extends GameState {
 
     private void checkGameOver() {
         if (correctCount >= getWinCondition()) {
-            musicPlayer.stop(); // 停止背景音樂
-            playVictoryMusic(); // 播放勝利音樂
+            musicPlayer.stop();
+            playVictoryMusic();
             JOptionPane.showMessageDialog(panel, "You Win!");
-            updateLevelProgress(chapter, level); // 更新遊玩進度
+            updateLevelProgress(chapter, level);
         } else {
             JOptionPane.showMessageDialog(panel, "You Lose!");
         }
@@ -226,13 +235,8 @@ public class LevelPanel extends GameState {
     }
 
     private void playBattleMusic(int chapter, int level) {
-        String musicFile;
-        if (level == 5) {
-            musicFile = "assets/sound/" + chapter + ".mp3";
-        } else {
-            musicFile = "assets/sound/battle.mp3";
-        }
-        musicPlayer.play(musicFile, true); // 循環播放音樂
+        String musicFile = level == 5 ? "assets/sound/" + chapter + ".mp3" : "assets/sound/battle.mp3";
+        musicPlayer.play(musicFile, true);
     }
 
     private void playVictoryMusic() {
@@ -244,7 +248,7 @@ public class LevelPanel extends GameState {
         } else {
             musicFile = "assets/sound/victory.mp3";
         }
-        musicPlayer.play(musicFile, false); // 播放一次音樂
+        musicPlayer.play(musicFile, false);
     }
 
     private int getWinCondition() {
@@ -257,7 +261,7 @@ public class LevelPanel extends GameState {
 
     @Override
     public void cleanup() {
-        musicPlayer.stop(); // 停止音樂
+        musicPlayer.stop();
     }
 
     private ImageIcon loadImageIcon(String path) {
@@ -275,7 +279,8 @@ public class LevelPanel extends GameState {
         File file = new File("level_progress.json");
         if (file.exists()) {
             try (FileReader reader = new FileReader(file)) {
-                Type type = new TypeToken<Map<Integer, boolean[]>>() {}.getType();
+                Type type = new TypeToken<Map<Integer, boolean[]>>() {
+                }.getType();
                 levelProgress = gson.fromJson(reader, type);
                 if (levelProgress == null) {
                     levelProgress = new HashMap<>();
@@ -285,7 +290,7 @@ public class LevelPanel extends GameState {
             }
         } else {
             levelProgress = new HashMap<>();
-            saveLevelProgress(); // 如果檔案不存在，創建一個新的
+            saveLevelProgress();
         }
     }
 
@@ -307,16 +312,20 @@ public class LevelPanel extends GameState {
     }
 
     @Override
-    public void init() {}
+    public void init() {
+    }
 
     @Override
-    public void handleInput() {}
+    public void handleInput() {
+    }
 
     @Override
-    public void update() {}
+    public void update() {
+    }
 
     @Override
-    public void render() {}
+    public void render() {
+    }
 
     private class OptionButtonListener implements ActionListener {
         private int optionIndex;
@@ -336,8 +345,7 @@ public class LevelPanel extends GameState {
             char correctAnswer = question.answer.charAt(0);
             char selectedAnswer = (char) ('A' + optionIndex);
 
-            String explanation = question.explanation; // 獲取解釋
-
+            String explanation = question.explanation;
             String result = selectedAnswer == correctAnswer ? "Correct" : "Incorrect";
             int messageType = selectedAnswer == correctAnswer ? JOptionPane.INFORMATION_MESSAGE : JOptionPane.ERROR_MESSAGE;
 
@@ -350,16 +358,8 @@ public class LevelPanel extends GameState {
                 playerHearts[getLoseCondition() - wrongCount].setIcon(loadImageIcon("assets/image/grey_heart.png"));
             }
 
-            // 改變選項按鈕的圖片
             optionButtons[optionIndex].setIcon(loadImageIcon("assets/image/options/" + selectedAnswer + "0.png"));
-
-            // 彈出解釋對話框
-            JTextArea explanationTextArea = new JTextArea(explanation);
-            explanationTextArea.setLineWrap(true);
-            explanationTextArea.setWrapStyleWord(true);
-            explanationTextArea.setPreferredSize(new Dimension(400, 300));
-            explanationTextArea.setEditable(false);
-            JOptionPane.showMessageDialog(panel, new JScrollPane(explanationTextArea), result, messageType);
+            showExplanationDialog(explanation, result, messageType);
 
             if (correctCount >= getWinCondition() || wrongCount >= getLoseCondition()) {
                 checkGameOver();
@@ -367,6 +367,15 @@ public class LevelPanel extends GameState {
                 currentQuestionIndex = currentQuestionIndex % questions.size();
                 displayNextQuestion();
             }
+        }
+
+        private void showExplanationDialog(String explanation, String result, int messageType) {
+            JTextArea explanationTextArea = new JTextArea(explanation);
+            explanationTextArea.setLineWrap(true);
+            explanationTextArea.setWrapStyleWord(true);
+            explanationTextArea.setPreferredSize(new Dimension(400, 300));
+            explanationTextArea.setEditable(false);
+            JOptionPane.showMessageDialog(panel, new JScrollPane(explanationTextArea), result, messageType);
         }
     }
 }

@@ -1,6 +1,7 @@
 import javax.swing.*;
-import java.awt.event.*;
 import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -71,10 +72,14 @@ public class StoryPanel extends JFrame implements MouseListener {
 
     private ArrayList<ImageIcon> getCurrentImages() {
         switch (currentChapter) {
-            case 0: return preludeImages;
-            case 1: return chapter1Images;
-            case 2: return chapter2Images;
-            default: return new ArrayList<>();
+            case 0:
+                return preludeImages;
+            case 1:
+                return chapter1Images;
+            case 2:
+                return chapter2Images;
+            default:
+                return new ArrayList<>();
         }
     }
 
@@ -107,13 +112,20 @@ public class StoryPanel extends JFrame implements MouseListener {
     }
 
     @Override
-    public void mousePressed(MouseEvent e) {}
+    public void mousePressed(MouseEvent e) {
+    }
+
     @Override
-    public void mouseReleased(MouseEvent e) {}
+    public void mouseReleased(MouseEvent e) {
+    }
+
     @Override
-    public void mouseEntered(MouseEvent e) {}
+    public void mouseEntered(MouseEvent e) {
+    }
+
     @Override
-    public void mouseExited(MouseEvent e) {}
+    public void mouseExited(MouseEvent e) {
+    }
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {

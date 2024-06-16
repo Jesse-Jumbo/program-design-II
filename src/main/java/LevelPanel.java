@@ -1,6 +1,7 @@
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,6 +11,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.Type;
 import java.util.Collections;
 import java.util.HashMap;
@@ -228,11 +230,18 @@ public class LevelPanel extends GameState {
             playVictoryMusic();
             JOptionPane.showMessageDialog(panel, "You Win!");
             updateLevelProgress(chapter, level);
+            if (level == 5) {
+                gsm.setState(GameStateManager.STORY, chapter);
+            } else {
+                gsm.setState(GameStateManager.PLAY);
+            }
         } else {
             JOptionPane.showMessageDialog(panel, "You Lose!");
+            gsm.setState(GameStateManager.PLAY);
         }
-        gsm.setState(GameStateManager.PLAY);
     }
+
+
 
     private void playBattleMusic(int chapter, int level) {
         String musicFile = level == 5 ? "assets/sound/" + chapter + ".mp3" : "assets/sound/battle.mp3";
@@ -252,7 +261,7 @@ public class LevelPanel extends GameState {
     }
 
     private int getWinCondition() {
-        return level == 5 ? 15 : 5;
+        return level == 5 ? 1 : 5;
     }
 
     private int getLoseCondition() {
@@ -377,5 +386,21 @@ public class LevelPanel extends GameState {
             explanationTextArea.setEditable(false);
             JOptionPane.showMessageDialog(panel, new JScrollPane(explanationTextArea), result, messageType);
         }
+    }
+
+    private void playChapterStory(int chapter) {
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            InputStream inputStream = getClass().getClassLoader().getResourceAsStream("assets/chapter/chapters.json");
+            List<GameStory.Chapter> chapters = mapper.readValue(inputStream,
+                    mapper.getTypeFactory().constructCollectionType(List.class, GameStory.Chapter.class));
+
+            if (chapter >= 0 && chapter < chapters.size()) {
+                GameStory.playChapter(chapters.get(chapter));
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        gsm.setState(GameStateManager.PLAY);
     }
 }

@@ -19,7 +19,6 @@ public class GameStateManager {
     public void setState(int state) {
         setState(state, 0, 0);
     }
-
     public void setState(int state, int chapter) {
         setState(state, chapter, 0);
     }
@@ -52,6 +51,10 @@ public class GameStateManager {
 
         currentState.init();
         game.changeState(currentState);
+    }
+
+    public void setNextStateAfterStory() {
+        setState(PLAY);
     }
 
     public GameState getCurrentState() {

@@ -36,7 +36,7 @@ public class StoryState extends GameState {
 
     private void loadNextImage() {
         if (currentIndex > chapters.get(chapter).getCount()) {
-            gsm.setState(GameStateManager.PLAY); // 切换回游戏状态
+            gsm.setNextStateAfterStory(); // 切换回游戏状态
             return;
         }
         String filePath = chapters.get(chapter).getPath() + "/" + currentIndex + "." + chapters.get(chapter).getType();

@@ -261,7 +261,7 @@ public class LevelPanel extends GameState {
     }
 
     private int getWinCondition() {
-        return level == 5 ? 1 : 5;
+        return level == 5 ? 15 : 5;
     }
 
     private int getLoseCondition() {

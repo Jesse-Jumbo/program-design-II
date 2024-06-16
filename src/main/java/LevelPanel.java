@@ -86,16 +86,16 @@ public class LevelPanel extends GameState {
         scrollPane = new JScrollPane(questionTextArea); // 初始化 scrollPane
         scrollPane.setOpaque(false);
         scrollPane.getViewport().setOpaque(false);
-        scrollPane.setPreferredSize(new Dimension(400, 200)); // 設置寬度為400像素
-        scrollPane.setMinimumSize(new Dimension(400, 100));
-        scrollPane.setMaximumSize(new Dimension(400, 400));
+        scrollPane.setPreferredSize(new Dimension(500, 200)); // 設置寬度為500像素
+        scrollPane.setMinimumSize(new Dimension(500, 200));
+        scrollPane.setMaximumSize(new Dimension(500, 400));
         questionPanel.add(scrollPane, BorderLayout.CENTER);
 
         // 將問題面板放在一個額外的容器中，使其居中對齊
         JPanel questionContainer = new JPanel(new GridBagLayout());
         questionContainer.setOpaque(false);
         GridBagConstraints gbc = new GridBagConstraints();
-        gbc.gridx = 0;
+        gbc.gridx = 1; // 將位置設為更靠右
         gbc.gridy = 0;
         gbc.weightx = 1.0;
         gbc.weighty = 1.0;
@@ -194,7 +194,7 @@ public class LevelPanel extends GameState {
         int lineHeight = questionTextArea.getFontMetrics(questionTextArea.getFont()).getHeight();
         int lines = (int) Math.ceil(textLength / 40.0); // 一行 40 個字
         int height = lines * lineHeight;
-        scrollPane.setPreferredSize(new Dimension(400, Math.min(height + 50, 400)));
+        scrollPane.setPreferredSize(new Dimension(500, Math.min(height + 50, 400)));
 
         // 滾動條默認在上方
         SwingUtilities.invokeLater(() -> scrollPane.getVerticalScrollBar().setValue(0));

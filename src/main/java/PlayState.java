@@ -1,10 +1,11 @@
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import javax.swing.*;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -64,7 +65,8 @@ public class PlayState extends GameState {
         File file = new File("level_progress.json");
         if (file.exists()) {
             try (FileReader reader = new FileReader(file)) {
-                Type type = new TypeToken<Map<Integer, boolean[]>>() {}.getType();
+                Type type = new TypeToken<Map<Integer, boolean[]>>() {
+                }.getType();
                 levelProgress = gson.fromJson(reader, type);
                 if (levelProgress == null) {
                     levelProgress = new HashMap<>();

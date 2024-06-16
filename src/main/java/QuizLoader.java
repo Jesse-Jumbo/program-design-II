@@ -1,4 +1,5 @@
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
@@ -9,7 +10,8 @@ class Question {
     public String answer;
     public String explanation;
 
-    public Question() {}
+    public Question() {
+    }
 
     public Question(String question, String answer, String explanation) {
         this.question = question;
@@ -21,6 +23,7 @@ class Question {
 public class QuizLoader {
 
     private static String questionPath;
+
     public static List<Question> loadQuestions(String resourcePath) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
         questionPath = resourcePath;

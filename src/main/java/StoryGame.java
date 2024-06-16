@@ -2,11 +2,12 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class StoryPanel extends JFrame implements MouseListener {
+public class StoryGame extends JFrame implements MouseListener {
     private JLabel imageLabel;
     private ArrayList<ImageIcon> preludeImages;
     private ArrayList<ImageIcon> chapter1Images;
@@ -15,7 +16,7 @@ public class StoryPanel extends JFrame implements MouseListener {
     private int currentChapter;
     private Map<Integer, ImageIcon> scaledImageCache;
 
-    public StoryPanel() {
+    public StoryGame() {
         // 初始化 JFrame
         setTitle("Program Design 2");
         setSize(960, 540); // 設置初始窗口大小為較小尺寸
@@ -27,9 +28,9 @@ public class StoryPanel extends JFrame implements MouseListener {
         preludeImages = new ArrayList<>();
         chapter1Images = new ArrayList<>();
         chapter2Images = new ArrayList<>();
-        loadImages(preludeImages, "PD2前情提要", 24, "png");
-        loadImages(chapter1Images, "PD2第一章", 196, "png");
-        loadImages(chapter2Images, "PD2第二章", 224, "jpg");
+        loadImages(preludeImages, "assets/chapter/PD2-previou", 24, "png");
+        loadImages(chapter1Images, "assets/chapter/PD2-s1", 196, "png");
+        loadImages(chapter2Images, "assets/chapter/PD2-s2", 224, "jpg");
 
         // 初始化 JLabel 並顯示第一張圖片
         imageLabel = new JLabel();
@@ -50,7 +51,13 @@ public class StoryPanel extends JFrame implements MouseListener {
 
     private void loadImages(ArrayList<ImageIcon> images, String folderName, int count, String extension) {
         for (int i = 1; i <= count; i++) {
-            images.add(new ImageIcon(getClass().getResource("/" + folderName + "/" + i + "." + extension))); // 使用相對路徑
+            String path = folderName + "/" + i + "." + extension;
+            URL imgURL = getClass().getClassLoader().getResource(path);
+            if (imgURL != null) {
+                images.add(new ImageIcon(imgURL));
+            } else {
+                System.err.println("Couldn't find file: " + path);
+            }
         }
     }
 

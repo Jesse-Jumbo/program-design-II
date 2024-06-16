@@ -1,5 +1,4 @@
 import javax.swing.*;
-import java.awt.*;
 
 public abstract class GameState {
     protected GameStateManager gsm;
@@ -11,9 +10,13 @@ public abstract class GameState {
     }
 
     public abstract void init();
+
     public abstract void handleInput();
+
     public abstract void update();
+
     public abstract void render();
+
     public abstract void cleanup(); // 新增方法
 
     public JPanel getPanel() {

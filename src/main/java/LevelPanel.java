@@ -104,9 +104,14 @@ public class LevelPanel extends GameState {
         bgLabel.add(questionContainer, BorderLayout.CENTER);
 
         JPanel optionsPanel = new JPanel(new GridLayout(1, 4));
+        optionsPanel.setOpaque(false); // 設置 optionsPanel 為透明
         optionButtons = new JButton[4];
         for (int i = 0; i < 4; i++) {
-            optionButtons[i] = new JButton(Character.toString((char) ('A' + i)));
+            optionButtons[i] = new JButton(loadImageIcon("assets/image/options/" + (char) ('A' + i) + ".png"));
+            optionButtons[i].setActionCommand(Character.toString((char) ('A' + i)));
+            optionButtons[i].setContentAreaFilled(false); // 使按鈕透明
+            optionButtons[i].setBorderPainted(false); // 移除按鈕邊框
+            optionButtons[i].setFocusPainted(false); // 移除按鈕焦點框
             optionButtons[i].addActionListener(new OptionButtonListener(i));
             optionsPanel.add(optionButtons[i]);
         }
@@ -120,10 +125,12 @@ public class LevelPanel extends GameState {
 
         // 設置左上角和右上角的愛心容器
         JPanel topPanel = new JPanel(new BorderLayout());
+        topPanel.setOpaque(false); // 設置 topPanel 為透明
         bgLabel.add(topPanel, BorderLayout.NORTH);
 
         // 設置玩家愛心圖示
         JPanel playerHeartsPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        playerHeartsPanel.setOpaque(false); // 設置 playerHeartsPanel 為透明
         playerHearts = new JLabel[getLoseCondition()];
         for (int i = 0; i < getLoseCondition(); i++) {
             playerHearts[i] = new JLabel(loadImageIcon("assets/image/heart.png"));
@@ -133,6 +140,7 @@ public class LevelPanel extends GameState {
 
         // 設置怪物愛心圖示
         JPanel enemyHeartsPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        enemyHeartsPanel.setOpaque(false); // 設置 enemyHeartsPanel 為透明
         enemyHeartLabel = new JLabel("X " + getWinCondition(), loadImageIcon("assets/image/heart.png"), JLabel.LEFT);
         enemyHeartsPanel.add(enemyHeartLabel);
         topPanel.add(enemyHeartsPanel, BorderLayout.EAST);
@@ -198,6 +206,11 @@ public class LevelPanel extends GameState {
 
         // 滾動條默認在上方
         SwingUtilities.invokeLater(() -> scrollPane.getVerticalScrollBar().setValue(0));
+
+        // 恢復按鈕圖片
+        for (int i = 0; i < 4; i++) {
+            optionButtons[i].setIcon(loadImageIcon("assets/image/options/" + (char) ('A' + i) + ".png"));
+        }
     }
 
     private void checkGameOver() {
@@ -336,6 +349,9 @@ public class LevelPanel extends GameState {
                 wrongCount++;
                 playerHearts[getLoseCondition() - wrongCount].setIcon(loadImageIcon("assets/image/grey_heart.png"));
             }
+
+            // 改變選項按鈕的圖片
+            optionButtons[optionIndex].setIcon(loadImageIcon("assets/image/options/" + selectedAnswer + "0.png"));
 
             // 彈出解釋對話框
             JTextArea explanationTextArea = new JTextArea(explanation);

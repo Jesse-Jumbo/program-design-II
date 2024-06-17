@@ -13,9 +13,9 @@
     ```sh
     cd Program-Design-II
     ```
-3. 使用 Gradle 建立專案：
+3. 使用 Gradle 建立專案（以防萬一，先清理後再重建）：
     ```sh
-    ./gradlew build
+    ./gradlew clean build
     ```
 4. 運行遊戲：
     ```sh

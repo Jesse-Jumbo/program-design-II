@@ -1,10 +1,9 @@
 plugins {
     id 'java'
+    id 'application'
 }
 
-group 'com.example'
 version '1.0-SNAPSHOT'
-
 sourceCompatibility = '17'
 
 repositories {
@@ -20,6 +19,8 @@ dependencies {
     implementation 'javazoom:jlayer:1.0.1'
     testImplementation 'junit:junit:4.13.2'
 }
+
+mainClassName = 'Game' // 確保這裡是你的主類的完全限定名稱
 
 test {
     useJUnitPlatform()

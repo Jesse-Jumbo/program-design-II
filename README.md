@@ -1,105 +1,98 @@
-# Program Design II
 ![螢幕擷取畫面 2024-06-04 193850](https://hackmd.io/_uploads/ByRC2_hEA.png)
-## 遊戲說明
+# Program Design II
 
+## 專案簡介
 《PROGRAM DESIGN II》是由部政佑、江婕瀅、黃若慈自主研發的一款操作極簡的問答類戰鬥RPG。遊戲發生在一個被稱作「國立成功大學」的幻想世界。在這裡，被選中的人們將會被授予「Java大法」，獲得物件導向之力。你將扮演一位名為「大學生」的神秘角色，在自由的旅行中邂逅性格各異、能力獨特的同伴們，和他們一起擊敗強敵、找回失散的學分——與此同時，逐步發掘「程式設計二」的真相。
 
-## Requirements
+## 安裝步驟
+1. 克隆這個倉庫到你的本地機器：
+    ```sh
+    git clone https://github.com/你的用戶名/Program-Design-II.git
+    ```
+2. 進入專案目錄：
+    ```sh
+    cd Program-Design-II
+    ```
+3. 使用 Gradle 建立專案：
+    ```sh
+    ./gradlew build
+    ```
+4. 運行遊戲：
+    ```sh
+    ./gradlew run
+    ```
 
-- Java == 1.8.0_401（Oracle JDK）/1.8.0_402（OpenJDK）
+## 使用說明
+### 如何使用這個遊戲
+1. clone [此專案](https://github.com/Jesse-Jumbo/program-design-II)。
+2. 參照安裝步驟進行安裝和運行。
+3. 運行 Game.java 後，進入遊戲主畫面，點擊 "Start Game" 開始遊戲。
+4. 按照劇情提示和關卡選擇進行遊戲。
 
-## 遊戲簡介
+### 基本操作
+所有操作皆使用滑鼠左鍵點擊。
 
-跟敵人戰鬥時，透過回答成功Java教材題庫的問題來對敵人造成傷害。
+### 玩法說明
+1. 進入遊戲後，點擊 "Start Game" 按鈕。
+   <img src="https://raw.githubusercontent.com/Jesse-Jumbo/program-design-II/main/src/main/resources/assets/image/readme/main_menu.png" alt="Main Menu" width="1000"/>
+2. 第一次遊玩會進入前情提要，根據劇情內容點擊滑鼠左鍵繼續。
+   ![image](https://hackmd.io/_uploads/SJr3kF2V0.png)
+3. 劇情結束後進入關卡選擇介面，分為五個 Chapter，每個 Chapter 有五個 Level。
+   <img src="https://raw.githubusercontent.com/Jesse-Jumbo/program-design-II/main/src/main/resources/assets/image/readme/level.png" alt="Level View" width="1000"/>
+4. 遊戲內會詢問與 PD2 課程內容相關的問題，有 A、B、C、D 四個選項。
+   <img src="https://raw.githubusercontent.com/Jesse-Jumbo/program-design-II/main/src/main/resources/assets/image/readme/fight.png" alt="Fight View" width="1000"/>
+5. 前四關需答對五題獲勝，失敗三題則遊戲結束。
+   <img src="https://raw.githubusercontent.com/Jesse-Jumbo/program-design-II/main/src/main/resources/assets/image/readme/lose.png" alt="Lose" width="1000"/>
+   <img src="https://raw.githubusercontent.com/Jesse-Jumbo/program-design-II/main/src/main/resources/assets/image/readme/win.png" alt="Win" width="1000"/>
+6. 答對一題，敵方會扣愛心，反之答錯一題，我方會扣愛心，不論對錯與否，皆會給題目的詳解。
+   <img src="https://raw.githubusercontent.com/Jesse-Jumbo/program-design-II/main/src/main/resources/assets/image/readme/correct.png" alt="Correct View" width="1000"/>
+   <img src="https://raw.githubusercontent.com/Jesse-Jumbo/program-design-II/main/src/main/resources/assets/image/readme/incorrect.png" alt="Incorrect View" width="1000"/>
+7. 通關 Level 1~4 之後，解鎖 Level 5。Level 5 需答對 10 題才可通關，失敗 5 題則遊戲失敗。
+7. 通關後，解鎖該 Chapter 的劇情，根據劇情內容點擊滑鼠左鍵繼續遊戲。
+   ![image](https://hackmd.io/_uploads/ryuZJF34C.png)
 
-## 遊戲機制
+## 功能特點
+- 簡單的滑鼠點擊操作
+- 多樣的劇情內容和角色
+- 多關卡設計，每關包含不同難度的問答挑戰
+- 與 PD2 課程內容相關的問答，學習與娛樂結合
+- 逐步解鎖的劇情，使遊戲充滿探索與挑戰性
 
-《PROGRAM DESIGN II》為回合制戰鬥RPG，遊戲戰鬥流程圖如下：
+## 技術細節
+### 使用的主要技術、框架或庫
+- **Java**: 遊戲的主要開發語言
+- **Gradle**: 構建工具
+- **Jackson**: 用於 JSON 處理
+  - `com.fasterxml.jackson.core:jackson-databind:2.13.0`
+  - `com.fasterxml.jackson.core:jackson-core:2.13.0`
+  - `com.fasterxml.jackson.core:jackson-annotations:2.13.0`
+  - `com.fasterxml.jackson.core:jackson-databind:2.12.3`
+- **Gson**: JSON 處理庫
+  - `com.google.code.gson:gson:2.8.8`
+- **JLayer**: 用於播放 MP3 文件
+  - `javazoom:jlayer:1.0.1`
+- **JUnit**: 測試框架
+  - `junit:junit:4.13.2`
 
-![image](https://hackmd.io/_uploads/Bk49Cdn4C.png)
+## 貢獻指南
+我們歡迎所有的貢獻者！如果你想要為這個專案做出貢獻，請遵循以下步驟：
+1. Fork 這個倉庫。
+2. 創建你的分支：
+    ```sh
+    git checkout -b feature/AmazingFeature
+    ```
+3. 提交你的修改：
+    ```sh
+    git commit -m 'Add some AmazingFeature'
+    ```
+4. 推送到分支：
+    ```sh
+    git push origin feature/AmazingFeature
+    ```
+5. 發給我們一個 Pull Request！
 
-### 過關條件
-
-- 敵人的心形生命值全數歸零。
-
-### 失敗條件
-
-- 我方的心形生命值歸零。
-
-## 遊戲操作
-
-- 滑鼠左鍵：選擇選項。
-
-## 遊戲玩法
-
-遊戲內容主要分為兩個部分：劇情對話跟問答戰鬥。
-
-### 劇情對話
-
-《PROGRAM DESIGN II》的劇情採線性推進，一共分為五個章節。玩家點擊滑鼠左鍵，以進到下一段對白。
-
-對話畫面（Dialogue screen diagram):
-
-![image](https://hackmd.io/_uploads/ryuZJF34C.png)
-
-劇情畫面（Plot screen diagram):
-
-![image](https://hackmd.io/_uploads/S1e_1t34A.png)
-
-如下圖所示，當玩家點擊滑鼠左鍵，就會進到下一段對白：
-
-![image](https://hackmd.io/_uploads/SJr3kF2V0.png)
-
-此外，部分對話設有選項，用滑鼠左鍵選擇選項，將會有不同劇情或對話：
-
-![image](https://hackmd.io/_uploads/ByB0yY24C.png)
-
-### 問答戰鬥
-
-- **戰鬥開始介面**：
-
-  - 遊戲開始時顯示 "BATTLE BEGIN"，背景是一堵磚牆，營造出戰鬥準備的氣氛。
-  
-![image](https://hackmd.io/_uploads/S1e4eYn40.png)
-  
-- **角色位置**：
-
-  - 玩家控制的角色跟血量位於遊戲畫面的左側。
-  - 敵人角色跟血量出現在遊戲畫面的右側。
-   
-![image](https://hackmd.io/_uploads/S1XIlt3VC.png)
-  
-- **問題與作答界面**：
-
-  - 每個戰鬥輪次開始時，會出現一個問題和四個選項（A, B, C, D），玩家需要在30秒內選擇答案。
-
-![image](https://hackmd.io/_uploads/rk6AgK3NR.png)
-
-- **作答計時與回應**：
-
-  - 每題有30秒的作答時間。如果玩家在時間內作答正確，則可以繼續挑戰下一題。
-  - 如果玩家答錯或超過時間未作答，則會受到來自敵人的攻擊，並可能失去一顆心形生命值。
-
-![image](https://hackmd.io/_uploads/HJfQ-F2NC.png)
-
-- **生命值和戰鬥結果**：
-
-  - 玩家的生命值和敵人的生命值都顯示在屏幕的上方，以心形符號表示。
-  - 每次玩家回答正確，敵人將受到攻擊並可能失去一顆心。
-  - 若敵人的心形生命值耗盡，玩家則獲得勝利。
-
-![image](https://hackmd.io/_uploads/r1XFZFhV0.png)
-
-- **勝利介面**：
-
-  - 當敵人的心形生命值歸零後，遊戲將顯示 "VICTORY" 界面，慶祝玩家的勝利。
-
-![image](https://hackmd.io/_uploads/rJ-jWY24A.png)
-
-- **問題的反饋與學習**：
-
-  - 無論攻擊成功與否，每題結束後都會顯示正確答案和相關解釋，增加學習和互動的元素。
-
-![image](https://hackmd.io/_uploads/ryeC-Y24C.png)
-
-此戰鬥設計不僅提供了刺激的遊戲體驗，也允許玩家通過問題來學習知識，寓教於樂。
+## 聯繫方式
+如果你有任何問題或建議，可以直接透過 GitHub 聯繫我們三個開發者：
+- 部政佑（Pukyle）[GitHub](https://github.com/pukyle)
+- 江婕瀅（Jesse）[GitHub](https://github.com/Jesse-Jumbo/)
+- 黃若慈（Rose）[GitHub](https://github.com/huang-rose)

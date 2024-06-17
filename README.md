@@ -7,7 +7,7 @@
 ## 安裝步驟
 1. 克隆這個倉庫到你的本地機器：
     ```sh
-    git clone https://github.com/你的用戶名/Program-Design-II.git
+    git clone https://github.com/Jesse-Jumbo/Program-Design-II.git
     ```
 2. 進入專案目錄：
     ```sh
@@ -39,14 +39,18 @@
    ![image](https://hackmd.io/_uploads/SJr3kF2V0.png)
 3. 劇情結束後進入關卡選擇介面，分為五個 Chapter，每個 Chapter 有五個 Level。
    <img src="https://raw.githubusercontent.com/Jesse-Jumbo/program-design-II/main/src/main/resources/assets/image/readme/level.png" alt="Level View" width="1000"/>
+
 4. 遊戲內會詢問與 PD2 課程內容相關的問題，有 A、B、C、D 四個選項。
    <img src="https://raw.githubusercontent.com/Jesse-Jumbo/program-design-II/main/src/main/resources/assets/image/readme/fight.png" alt="Fight View" width="1000"/>
+
 5. 前四關需答對五題獲勝，失敗三題則遊戲結束。
    <img src="https://raw.githubusercontent.com/Jesse-Jumbo/program-design-II/main/src/main/resources/assets/image/readme/lose.png" alt="Lose" width="1000"/>
    <img src="https://raw.githubusercontent.com/Jesse-Jumbo/program-design-II/main/src/main/resources/assets/image/readme/win.png" alt="Win" width="1000"/>
+
 6. 答對一題，敵方會扣愛心，反之答錯一題，我方會扣愛心，不論對錯與否，皆會給題目的詳解。
    <img src="https://raw.githubusercontent.com/Jesse-Jumbo/program-design-II/main/src/main/resources/assets/image/readme/correct.png" alt="Correct View" width="1000"/>
    <img src="https://raw.githubusercontent.com/Jesse-Jumbo/program-design-II/main/src/main/resources/assets/image/readme/incorrect.png" alt="Incorrect View" width="1000"/>
+
 7. 通關 Level 1~4 之後，解鎖 Level 5。Level 5 需答對 10 題才可通關，失敗 5 題則遊戲失敗。
 7. 通關後，解鎖該 Chapter 的劇情，根據劇情內容點擊滑鼠左鍵繼續遊戲。
    ![image](https://hackmd.io/_uploads/ryuZJF34C.png)

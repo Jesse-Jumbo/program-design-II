@@ -8,6 +8,7 @@ public class GameStateManager {
     public static final int SETTING = 2;
     public static final int LEVEL = 3;
     public static final int STORY = 4;
+    private MusicPlayer musicPlayer = new MusicPlayer();
 
     public GameStateManager(Game game) {
         this.game = game;
@@ -28,6 +29,7 @@ public class GameStateManager {
             currentState.cleanup();
         }
 
+        musicPlayer.stop();
         switch (state) {
             case MENU:
                 currentState = new MainMenuState(this, game);
@@ -42,6 +44,8 @@ public class GameStateManager {
                 currentState = new LevelPanel(this, game, chapter, level);
                 break;
             case STORY:
+                String musicFile = "assets/sound/story.mp3";
+                musicPlayer.play(musicFile, true);
                 currentState = new StoryState(this, chapter);
                 break;
             default:

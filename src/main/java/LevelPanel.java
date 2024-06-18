@@ -32,7 +32,6 @@ public class LevelPanel extends GameState {
     private JLabel enemyHeartLabel;
     private JLabel playerLabel;
     private JLabel enemyLabel;
-    private MusicPlayer musicPlayer;
     private Map<Integer, boolean[]> levelProgress;
     private JLabel bgLabel;
 
@@ -40,7 +39,6 @@ public class LevelPanel extends GameState {
         super(gsm);
         this.chapter = chapter;
         this.level = level;
-        this.musicPlayer = new MusicPlayer();
         panel.setLayout(new BorderLayout());
 
         loadLevelProgress();

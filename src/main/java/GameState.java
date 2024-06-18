@@ -3,10 +3,12 @@ import javax.swing.*;
 public abstract class GameState {
     protected GameStateManager gsm;
     protected JPanel panel;
+    protected MusicPlayer musicPlayer;
 
     public GameState(GameStateManager gsm) {
         this.gsm = gsm;
         this.panel = new JPanel();
+        musicPlayer = new MusicPlayer();
     }
 
     public abstract void init();

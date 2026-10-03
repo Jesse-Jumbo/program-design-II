@@ -1,102 +1,290 @@
-![螢幕擷取畫面 2024-06-04 193850](https://hackmd.io/_uploads/ByRC2_hEA.png)
-# Program Design II
+<p align="center">
+  <img src="doc/readme/00-title.png" alt="遊戲標題畫面" width="820">
+</p>
 
-## 專案簡介
-《PROGRAM DESIGN II》是由部政佑、江婕瀅、黃若慈自主研發的一款操作極簡的問答類戰鬥RPG。遊戲發生在一個被稱作「國立成功大學」的幻想世界。在這裡，被選中的人們將會被授予「Java大法」，獲得物件導向之力。你將扮演一位名為「大學生」的神秘角色，在自由的旅行中邂逅性格各異、能力獨特的同伴們，和他們一起擊敗強敵、找回失散的學分——與此同時，逐步發掘「程式設計二」的真相。
+# 問答式戰鬥 RPG：以狀態模式實作的 Java 桌面遊戲
 
-## 安裝步驟
-1. 克隆這個倉庫到你的本地機器：
-    ```sh
-    git clone https://github.com/Jesse-Jumbo/Program-Design-II.git
-    ```
-2. 進入專案目錄：
-    ```sh
-    cd Program-Design-II
-    ```
-3. 使用 Gradle 建立專案（以防萬一，先清理後再重建）：
-    ```sh
-    ./gradlew clean build
-    ```
-4. 運行遊戲：
-    ```sh
-    ./gradlew run
-    ```
+**Program Design II — A Quiz-Battle RPG Built on the State Pattern**
 
-## 使用說明
-### 如何使用這個遊戲
-1. clone [此專案](https://github.com/Jesse-Jumbo/program-design-II)。
-2. 參照安裝步驟進行安裝和運行。
-3. 運行 Game.java 後，進入遊戲主畫面，點擊 "Start Game" 開始遊戲。
-4. 按照劇情提示和關卡選擇進行遊戲。
+> 國立成功大學資訊工程學系「程式設計（二）」期末專案（2024 年春季）｜三人團隊
+> Java 17 · Swing · Gradle · Jackson / Gson · JLayer
 
-### 基本操作
-所有操作皆使用滑鼠左鍵點擊。
+本專案是一款以滑鼠操作的問答式戰鬥 RPG。玩家扮演「大學生」，在五個章節、二十五個關卡中回答與課程內容相關的 Java 選擇題：答對則敵方失去生命，答錯則我方失去生命，每題作答後皆顯示詳解。通過章節後會解鎖對應的劇情。
 
-### 玩法說明
-1. 進入遊戲後，點擊 "Start Game" 按鈕。
-   <img src="https://raw.githubusercontent.com/Jesse-Jumbo/program-design-II/main/src/main/resources/assets/image/readme/main_menu.png" alt="Main Menu" width="1000"/>
-2. 第一次遊玩會進入前情提要，根據劇情內容點擊滑鼠左鍵繼續。
-   ![image](https://hackmd.io/_uploads/SJr3kF2V0.png)
-3. 劇情結束後進入關卡選擇介面，分為五個 Chapter，每個 Chapter 有五個 Level。
-   <img src="https://raw.githubusercontent.com/Jesse-Jumbo/program-design-II/main/src/main/resources/assets/image/readme/level.png" alt="Level View" width="1000"/>
+專案的目的是把課堂所學的物件導向設計落實在一個完整的應用程式上，因此在架構上有三項重點：
 
-4. 遊戲內會詢問與 PD2 課程內容相關的問題，有 A、B、C、D 四個選項。
-   <img src="https://raw.githubusercontent.com/Jesse-Jumbo/program-design-II/main/src/main/resources/assets/image/readme/fight.png" alt="Fight View" width="1000"/>
+1. 以**狀態模式（State Pattern）**管理主選單、關卡選擇、戰鬥、劇情等畫面的切換；
+2. **題庫與劇情皆以外部 JSON 描述**，新增題目或章節不需修改程式；
+3. 關卡進度寫入本機檔案，重新開啟遊戲後可接續遊玩。
 
-5. 前四關需答對五題獲勝，失敗三題則遊戲結束。
-   <img src="https://raw.githubusercontent.com/Jesse-Jumbo/program-design-II/main/src/main/resources/assets/image/readme/lose.png" alt="Lose" width="1000"/>
-   <img src="https://raw.githubusercontent.com/Jesse-Jumbo/program-design-II/main/src/main/resources/assets/image/readme/win.png" alt="Win" width="1000"/>
+---
 
-6. 答對一題，敵方會扣愛心，反之答錯一題，我方會扣愛心，不論對錯與否，皆會給題目的詳解。
-   <img src="https://raw.githubusercontent.com/Jesse-Jumbo/program-design-II/main/src/main/resources/assets/image/readme/correct.png" alt="Correct View" width="1000"/>
-   <img src="https://raw.githubusercontent.com/Jesse-Jumbo/program-design-II/main/src/main/resources/assets/image/readme/incorrect.png" alt="Incorrect View" width="1000"/>
+## 目錄
 
-7. 通關 Level 1~4 之後，解鎖 Level 5。Level 5 需答對 10 題才可通關，失敗 5 題則遊戲失敗。
-7. 通關後，解鎖該 Chapter 的劇情，根據劇情內容點擊滑鼠左鍵繼續遊戲。
-   ![image](https://hackmd.io/_uploads/ryuZJF34C.png)
+- [遊戲畫面](#遊戲畫面)
+- [系統設計](#系統設計)
+- [題庫系統](#題庫系統)
+- [劇情系統](#劇情系統)
+- [分工](#分工)
+- [建置與執行](#建置與執行)
+- [專案結構](#專案結構)
+- [已知限制](#已知限制)
 
-## 功能特點
-- 簡單的滑鼠點擊操作
-- 多樣的劇情內容和角色
-- 多關卡設計，每關包含不同難度的問答挑戰
-- 與 PD2 課程內容相關的問答，學習與娛樂結合
-- 逐步解鎖的劇情，使遊戲充滿探索與挑戰性
+---
 
-## 技術細節
-### 使用的主要技術、框架或庫
-- **Java**: 遊戲的主要開發語言
-- **Gradle**: 構建工具
-- **Jackson**: 用於 JSON 處理
-  - `com.fasterxml.jackson.core:jackson-databind:2.13.0`
-  - `com.fasterxml.jackson.core:jackson-core:2.13.0`
-  - `com.fasterxml.jackson.core:jackson-annotations:2.13.0`
-  - `com.fasterxml.jackson.core:jackson-databind:2.12.3`
-- **Gson**: JSON 處理庫
-  - `com.google.code.gson:gson:2.8.8`
-- **JLayer**: 用於播放 MP3 文件
-  - `javazoom:jlayer:1.0.1`
-- **JUnit**: 測試框架
-  - `junit:junit:4.13.2`
+## 遊戲畫面
 
-## 貢獻指南
-我們歡迎所有的貢獻者！如果你想要為這個專案做出貢獻，請遵循以下步驟：
-1. Fork 這個倉庫。
-2. 創建你的分支：
-    ```sh
-    git checkout -b feature/AmazingFeature
-    ```
-3. 提交你的修改：
-    ```sh
-    git commit -m 'Add some AmazingFeature'
-    ```
-4. 推送到分支：
-    ```sh
-    git push origin feature/AmazingFeature
-    ```
-5. 發給我們一個 Pull Request！
+以下各圖的編號標註說明該畫面的功能，圖下文字補充對應的規則。
 
-## 聯繫方式
-如果你有任何問題或建議，可以直接透過 GitHub 聯繫我們三個開發者：
-- 部政佑（Pukyle）[GitHub](https://github.com/pukyle)
-- 江婕瀅（Jesse）[GitHub](https://github.com/Jesse-Jumbo/)
-- 黃若慈（Rose）[GitHub](https://github.com/huang-rose)
+### 1. 主選單
+
+<p align="center"><img src="doc/readme/01-main-menu.png" alt="主選單" width="760"></p>
+
+> **說明**　程式啟動後進入主選單。按下 **Start Game** 時，系統會檢查關卡進度檔：若尚無任何紀錄，視為首次遊玩，先播放前情提要再進入關卡選擇；否則直接進入關卡選擇。
+
+### 2. 關卡選擇
+
+<p align="center"><img src="doc/readme/02-level-select.png" alt="關卡選擇" width="760"></p>
+
+> **說明**　全遊戲共 5 個 Chapter，每個 Chapter 有 5 個 Level。Level 5 為該章的魔王關，按鈕預設為灰色，須通過同章的 Level 1–4 才能進入。
+
+### 3. 戰鬥
+
+<p align="center"><img src="doc/readme/03-battle.png" alt="戰鬥畫面" width="760"></p>
+
+> **說明**　畫面上方為雙方生命值，中央為題目，下方為 A–D 四個選項。題目由該章的題庫載入後隨機排序。
+>
+> | 關卡 | 題目來源 | 過關條件 | 失敗條件 |
+> | --- | --- | --- | --- |
+> | Level 1–4 | 該章題庫各取 5 題 | 答對 5 題 | 答錯 3 題 |
+> | Level 5（魔王關） | 該章全部 20 題 | 答對 15 題 | 答錯 5 題 |
+
+### 4. 作答回饋
+
+<table>
+<tr>
+<td width="50%"><img src="doc/readme/04-correct.png" alt="答對"></td>
+<td width="50%"><img src="doc/readme/05-incorrect.png" alt="答錯"></td>
+</tr>
+<tr>
+<td align="center"><b>答對</b>：敵方扣一顆心</td>
+<td align="center"><b>答錯</b>：我方扣一顆心</td>
+</tr>
+</table>
+
+> **說明**　不論答對或答錯，系統都會彈出詳解視窗，說明正確答案與各選項錯誤的原因。這是本遊戲「邊玩邊複習」的核心設計。
+
+### 5. 過關與失敗
+
+<table>
+<tr>
+<td width="50%"><img src="doc/readme/06-win.png" alt="過關"></td>
+<td width="50%"><img src="doc/readme/07-lose.png" alt="失敗"></td>
+</tr>
+<tr>
+<td align="center"><b>過關</b>：寫入關卡進度</td>
+<td align="center"><b>失敗</b>：返回關卡選擇</td>
+</tr>
+</table>
+
+> **說明**　過關後進度會寫入 `level_progress.json`。通過魔王關（Level 5）後，系統會播放該章的劇情，再回到關卡選擇。
+
+---
+
+## 系統設計
+
+### 狀態模式
+
+遊戲的每個畫面是一個「狀態」。所有狀態繼承抽象類別 `GameState`，實作相同的五個方法；`GameStateManager` 持有目前的狀態，並負責切換。切換時先呼叫舊狀態的 `cleanup()` 釋放資源，再建立新狀態並呼叫 `init()`，最後由 `Game`（`JFrame`）換上新狀態的面板。
+
+```java
+public abstract class GameState {
+    public abstract void init();
+    public abstract void handleInput();
+    public abstract void update();
+    public abstract void render();
+    public abstract void cleanup();
+}
+```
+
+這樣的設計使各畫面的邏輯彼此獨立：新增一個畫面只需新增一個 `GameState` 子類別，並在 `GameStateManager` 登記，不必更動其他畫面。
+
+### 狀態轉移
+
+```mermaid
+stateDiagram-v2
+    [*] --> MENU
+    MENU --> SETTING: Settings
+    SETTING --> MENU: Back
+    MENU --> STORY: Start Game（首次遊玩，播放前情提要）
+    MENU --> PLAY: Start Game（已有進度）
+    STORY --> PLAY: 劇情播放完畢
+    PLAY --> LEVEL: 選擇關卡
+    LEVEL --> PLAY: Level 1–4 過關，或挑戰失敗
+    LEVEL --> STORY: Level 5 過關，播放章節劇情
+```
+
+| 狀態常數 | 類別 | 職責 |
+| --- | --- | --- |
+| `MENU` | `MainMenuState` | 主選單；判斷是否為首次遊玩 |
+| `SETTING` | `SettingsMenuState` | 設定選單 |
+| `PLAY` | `PlayState` | 關卡選擇；讀取進度並控制魔王關的解鎖 |
+| `LEVEL` | `LevelPanel` | 戰鬥；出題、判定對錯、計算生命值、儲存進度 |
+| `STORY` | `StoryState` | 劇情播放 |
+
+### 類別關係
+
+下圖僅列出核心類別。完整的類別圖見 [`doc/ClassDiagram.png`](doc/ClassDiagram.png)。
+
+```mermaid
+classDiagram
+    class Game {
+        +changeState(GameState)
+    }
+    class GameStateManager {
+        -GameState currentState
+        +setState(state, chapter, level)
+    }
+    class GameState {
+        <<abstract>>
+        +init()
+        +handleInput()
+        +update()
+        +render()
+        +cleanup()
+    }
+    class LevelPanel {
+        -List~Question~ questions
+        -filterQuestionsByLevel()
+        -displayNextQuestion()
+        -saveLevelProgress()
+    }
+    class QuizLoader {
+        +loadQuestions(path)$ List~Question~
+    }
+    class Question {
+        +String question
+        +String answer
+        +String explanation
+    }
+
+    Game *-- GameStateManager
+    GameStateManager o-- GameState
+    GameState <|-- MainMenuState
+    GameState <|-- SettingsMenuState
+    GameState <|-- PlayState
+    GameState <|-- LevelPanel
+    GameState <|-- StoryState
+    LevelPanel ..> QuizLoader : 載入題目
+    QuizLoader ..> Question : 建立
+    LevelPanel ..> MusicPlayer : 播放音樂
+```
+
+---
+
+## 題庫系統
+
+題庫與程式分離，每個章節對應一個 JSON 檔（`assets/question/question_1.json` 至 `question_5.json`），各 20 題，共 100 題。每一題包含題目、正確答案與詳解三個欄位：
+
+```json
+{
+  "question": "Q: 若一個 Java 類別使用一個介面(Interface)，它必須使用以下那一個關鍵字？\nA extends\nB inherits\nC super\nD implements",
+  "answer": "D",
+  "explanation": "在 Java 中，當一個類別要使用一個介面時，必須使用關鍵字 implements……"
+}
+```
+
+載入流程如下：
+
+1. `QuizLoader.loadQuestions()` 以 Jackson 的 `ObjectMapper` 將 JSON 反序列化為 `List<Question>`；
+2. `LevelPanel` 依關卡編號取出對應區段：Level 1–4 各取 5 題，Level 5 取該章全部 20 題；
+3. 以 `Collections.shuffle()` 隨機排序後依序出題。
+
+由於題目資料與程式邏輯分離，擴充題庫只需編輯 JSON 檔，不需重新編譯。
+
+---
+
+## 劇情系統
+
+劇情以逐頁圖片呈現，玩家點擊滑鼠左鍵換頁。各章的圖片資料夾、頁數與副檔名記錄在 `assets/chapter/chapters.json`：
+
+```json
+[
+  { "path": "assets/chapter/PD2-previou", "count": 24,  "type": "png" },
+  { "path": "assets/chapter/PD2-s1",      "count": 197, "type": "png" }
+]
+```
+
+`StoryState` 讀取這份設定後，依序載入 `path/1.type`、`path/2.type`……直到最後一頁，再通知 `GameStateManager` 切回關卡選擇。前情提要加上五個章節，共 942 頁劇情畫面。
+
+---
+
+## 分工
+
+| 成員 | 負責項目 |
+| --- | --- |
+| **部政佑** [@pukyle](https://github.com/pukyle) | 劇情系統與各章劇情畫面製作、整體 UI 設計、題庫系統 |
+| 江婕瀅 [@Jesse-Jumbo](https://github.com/Jesse-Jumbo/) | <!-- TODO：請確認 --> 遊戲狀態架構整合、Gradle 建置、音樂播放 |
+| 黃若慈 [@huang-rose](https://github.com/huang-rose) | <!-- TODO：請確認 --> 劇情內容編修、錯誤修正 |
+
+---
+
+## 建置與執行
+
+**環境需求**：JDK 17 以上。專案內含 Gradle Wrapper，不需另外安裝 Gradle。
+
+```sh
+git clone https://github.com/pukyle/program-design-II.git
+cd program-design-II
+./gradlew clean build
+./gradlew run
+```
+
+Windows 請將 `./gradlew` 改為 `gradlew.bat`。所有操作皆以滑鼠左鍵完成。
+
+**相依套件**
+
+| 套件 | 用途 |
+| --- | --- |
+| Jackson Databind 2.13.0 | 題庫與章節設定的 JSON 反序列化 |
+| Gson 2.8.8 | 關卡進度的讀寫 |
+| JLayer 1.0.1 | 播放 MP3 背景音樂 |
+| JUnit 4.13.2 | 測試 |
+
+---
+
+## 專案結構
+
+```
+program-design-II/
+├── build.gradle
+├── doc/
+│   ├── ClassDiagram.png          完整類別圖
+│   └── readme/                   本文件使用的圖片
+└── src/main/
+    ├── java/
+    │   ├── Game.java             程式進入點（JFrame）
+    │   ├── GameStateManager.java 狀態切換
+    │   ├── GameState.java        狀態的抽象類別
+    │   ├── MainMenuState.java    主選單
+    │   ├── SettingsMenuState.java 設定選單
+    │   ├── PlayState.java        關卡選擇
+    │   ├── LevelPanel.java       戰鬥
+    │   ├── StoryState.java       劇情播放
+    │   ├── QuizLoader.java       題庫載入
+    │   └── MusicPlayer.java      音樂播放
+    └── resources/assets/
+        ├── question/             題庫 JSON（每章一檔）
+        ├── chapter/              劇情圖片與 chapters.json
+        ├── image/                角色、背景、按鈕圖片
+        └── sound/                背景音樂
+```
+
+---
+
+## 已知限制
+
+- 關卡進度檔 `level_progress.json` 以相對路徑存放於執行目錄，從不同目錄啟動會被視為新的進度。
+- 設定選單目前僅提供返回主選單的功能。
+- 題目依固定區段分配至 Level 1–4，同一關卡的題目組合不變，僅順序隨機。
+- 劇情圖片逐頁以完整圖檔儲存，資源檔體積較大。
